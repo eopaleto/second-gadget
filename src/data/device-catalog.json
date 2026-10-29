@@ -1,0 +1,1001 @@
+{
+  "checked_at": "2026-10-29",
+  "brands": [
+    {
+      "id": "af70a861-5427-4260-868b-fa134dee4f17",
+      "name": "Apple",
+      "slug": "apple",
+      "logo_path": "/brands/apple.svg",
+      "is_active": true,
+      "sort_order": 0
+    },
+    {
+      "id": "172d107b-987e-41f7-8067-0710ff978614",
+      "name": "Samsung",
+      "slug": "samsung",
+      "logo_path": "/brands/samsung.svg",
+      "is_active": true,
+      "sort_order": 1
+    },
+    {
+      "id": "9a15d36e-e1d1-4d4a-8024-dcb67ceea73d",
+      "name": "Xiaomi",
+      "slug": "xiaomi",
+      "logo_path": "/brands/xiaomi.svg",
+      "is_active": true,
+      "sort_order": 2
+    },
+    {
+      "id": "38acd05f-e653-4ca9-8b9b-27133fc90d48",
+      "name": "POCO",
+      "slug": "poco",
+      "logo_path": "/brands/poco.svg",
+      "is_active": true,
+      "sort_order": 3
+    },
+    {
+      "id": "2c0b7c53-710d-4a95-8a01-41db92f6e48b",
+      "name": "OPPO",
+      "slug": "oppo",
+      "logo_path": "/brands/oppo.svg",
+      "is_active": true,
+      "sort_order": 4
+    },
+    {
+      "id": "ddee6ecb-bcd6-4ce7-8970-c4eddd48974e",
+      "name": "vivo",
+      "slug": "vivo",
+      "logo_path": "/brands/vivo.svg",
+      "is_active": true,
+      "sort_order": 5
+    },
+    {
+      "id": "fd60c275-6d90-46eb-85c8-f4938e2f9f0c",
+      "name": "realme",
+      "slug": "realme",
+      "logo_path": "/brands/realme.svg",
+      "is_active": true,
+      "sort_order": 6
+    },
+    {
+      "id": "b82180e7-a282-4633-8024-0a0917951e0d",
+      "name": "Infinix",
+      "slug": "infinix",
+      "logo_path": "/brands/infinix.svg",
+      "is_active": true,
+      "sort_order": 7
+    },
+    {
+      "id": "de11aa2c-c77d-4029-8e2b-1c2d95c1615b",
+      "name": "TECNO",
+      "slug": "tecno",
+      "logo_path": "/brands/tecno.svg",
+      "is_active": true,
+      "sort_order": 8
+    },
+    {
+      "id": "5594dd22-55dc-4875-843c-17d4197a69d6",
+      "name": "ASUS",
+      "slug": "asus",
+      "logo_path": "/brands/asus.svg",
+      "is_active": true,
+      "sort_order": 9
+    },
+    {
+      "id": "83733be2-2994-448c-8e6e-6ec89d7b8fbe",
+      "name": "Lenovo",
+      "slug": "lenovo",
+      "logo_path": "/brands/lenovo.svg",
+      "is_active": true,
+      "sort_order": 10
+    },
+    {
+      "id": "94a7a239-3216-40f9-886f-12b3172a3368",
+      "name": "Acer",
+      "slug": "acer",
+      "logo_path": "/brands/acer.svg",
+      "is_active": true,
+      "sort_order": 11
+    },
+    {
+      "id": "74e89e6f-e5f6-468d-8041-e10bb9103d7b",
+      "name": "HP",
+      "slug": "hp",
+      "logo_path": "/brands/hp.svg",
+      "is_active": true,
+      "sort_order": 12
+    },
+    {
+      "id": "44ec29a7-4854-4783-8122-15be39b4814e",
+      "name": "Dell",
+      "slug": "dell",
+      "logo_path": "/brands/dell.svg",
+      "is_active": true,
+      "sort_order": 13
+    },
+    {
+      "id": "1130a4a5-5daa-42cc-8d79-84bbd636f085",
+      "name": "MSI",
+      "slug": "msi",
+      "logo_path": "/brands/msi.svg",
+      "is_active": true,
+      "sort_order": 14
+    },
+    {
+      "id": "9361e0ef-08f3-42d0-87d7-aad68ee6c5f7",
+      "name": "Huawei",
+      "slug": "huawei",
+      "logo_path": "/brands/huawei.svg",
+      "is_active": true,
+      "sort_order": 15
+    },
+    {
+      "id": "67b33c21-8dc7-4c5c-8f6f-ae7aab75a1f0",
+      "name": "HONOR",
+      "slug": "honor",
+      "logo_path": "/brands/honor.svg",
+      "is_active": true,
+      "sort_order": 16
+    },
+    {
+      "id": "62b3113d-b544-45cd-8bc0-9722d2287f5a",
+      "name": "Google",
+      "slug": "google",
+      "logo_path": "/brands/google.svg",
+      "is_active": true,
+      "sort_order": 17
+    },
+    {
+      "id": "7ba30dcb-6ce2-4c4a-8a11-4225803a454a",
+      "name": "Nothing",
+      "slug": "nothing",
+      "logo_path": "/brands/nothing.svg",
+      "is_active": true,
+      "sort_order": 18
+    },
+    {
+      "id": "89bacddf-5c77-4892-8fdf-e5973e2fd7d8",
+      "name": "OnePlus",
+      "slug": "oneplus",
+      "logo_path": "/brands/oneplus.svg",
+      "is_active": true,
+      "sort_order": 19
+    },
+    {
+      "id": "b39fc170-2d9c-4c4e-80f4-238671048dc6",
+      "name": "Motorola",
+      "slug": "motorola",
+      "logo_path": "/brands/motorola.svg",
+      "is_active": true,
+      "sort_order": 20
+    },
+    {
+      "id": "b3a2bd8c-e587-40ba-8317-b10e2692f9f7",
+      "name": "Sony",
+      "slug": "sony",
+      "logo_path": "/brands/sony.svg",
+      "is_active": true,
+      "sort_order": 21
+    },
+    {
+      "id": "3bb36a6a-c225-44cd-8fa0-d33b3970a1e4",
+      "name": "Nokia",
+      "slug": "nokia",
+      "logo_path": "/brands/nokia.svg",
+      "is_active": true,
+      "sort_order": 22
+    },
+    {
+      "id": "e38eba4d-f4d7-46be-8327-7424db279cb0",
+      "name": "Microsoft",
+      "slug": "microsoft",
+      "logo_path": "/brands/microsoft.svg",
+      "is_active": true,
+      "sort_order": 23
+    }
+  ],
+  "categories": [
+    {
+      "id": "ef943af8-a82a-459a-8360-f1018dd95297",
+      "name": "iPhone",
+      "slug": "iphone",
+      "is_active": true
+    },
+    {
+      "id": "184cc9db-277d-40fe-8f2c-4142cb1e985c",
+      "name": "Android",
+      "slug": "android",
+      "is_active": true
+    },
+    {
+      "id": "8257edfa-f351-4ad3-8866-1d427b1e3579",
+      "name": "Tablet",
+      "slug": "tablet",
+      "is_active": true
+    },
+    {
+      "id": "7e27b1db-4c9a-4d4f-8572-71f7c24323a8",
+      "name": "Laptop",
+      "slug": "laptop",
+      "is_active": true
+    },
+    {
+      "id": "ec02bdb9-bde8-4168-8136-7f110cd6e094",
+      "name": "Aksesori",
+      "slug": "aksesori",
+      "is_active": true
+    },
+    {
+      "id": "5a8bcca3-3a31-4449-8def-5a017b99fae3",
+      "name": "Lainnya",
+      "slug": "lainnya",
+      "is_active": true
+    }
+  ],
+  "models": [
+    {
+      "id": "bff293b4-58e6-4adc-8088-9d4f3394140b",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 17 Pro Max",
+      "storage_options": [256, 512, 1024, 2048],
+      "ram_options": [],
+      "color_options": ["Silver", "Cosmic Orange", "Deep Blue"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "d0371d56-af56-4f25-88ed-b1730c66c17d",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 17 Pro",
+      "storage_options": [256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Silver", "Cosmic Orange", "Deep Blue"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "ab01ab13-6b09-459b-8fa0-1945e7b8155c",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 17",
+      "storage_options": [256, 512],
+      "ram_options": [],
+      "color_options": ["Black", "White", "Mist Blue", "Sage", "Lavender"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "23169a47-3fd6-4f7b-88c7-040e4f0f6d7a",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 16 Pro Max",
+      "storage_options": [256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Black Titanium", "White Titanium", "Natural Titanium", "Desert Titanium"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "4edfb159-5897-47e8-86a1-1f251df85c85",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 16 Pro",
+      "storage_options": [128, 256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Black Titanium", "White Titanium", "Natural Titanium", "Desert Titanium"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "06bbcb4c-a588-4d81-87da-fbff0a20db67",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 16 Plus",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Black", "White", "Pink", "Teal", "Ultramarine"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "7d167ec0-d2ea-4b65-8897-b36986063c41",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 16",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Black", "White", "Pink", "Teal", "Ultramarine"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "b1595d7e-45be-4252-8b9b-0b52cbfb12c1",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 15 Pro Max",
+      "storage_options": [256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Black Titanium", "White Titanium", "Blue Titanium", "Natural Titanium"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "b1e11d1f-7c9a-4799-89e9-88a658056fb1",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 15 Pro",
+      "storage_options": [128, 256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Black Titanium", "White Titanium", "Blue Titanium", "Natural Titanium"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "9726c696-0e64-4944-8ae1-8730cf681654",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 15 Plus",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Black", "Blue", "Green", "Yellow", "Pink"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "66090961-fce5-41f2-8690-b5df65292980",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 15",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Black", "Blue", "Green", "Yellow", "Pink"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "550ed1ba-a537-42a5-8605-46c839e718cd",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 14 Pro Max",
+      "storage_options": [128, 256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Silver", "gold", "space black", "deep purple"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "b01910bc-dda6-43c5-87ac-fd1cf9770353",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 14 Pro",
+      "storage_options": [128, 256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Silver", "gold", "space black", "deep purple"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "6ffa5c49-1641-4e54-82c3-14cc4e407154",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 14 Plus",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Midnight", "starlight", "(PRODUCT)RED", "blue", "purple", "yellow"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "05d7484c-d331-423e-8d42-767ced14578c",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 14",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Midnight", "starlight", "(PRODUCT)RED", "blue", "purple", "yellow"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "f5394acf-1ba4-4fd0-86d5-9819aae8e67e",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone SE (3rd generation)",
+      "storage_options": [64, 128, 256],
+      "ram_options": [],
+      "color_options": ["(PRODUCT)RED", "starlight", "midnight"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "3627bccf-508c-4968-8ff9-08a28dfdb04d",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 13 Pro Max",
+      "storage_options": [128, 256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Graphite", "gold", "silver", "sierra blue", "alpine green"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "2b5b7729-5476-436f-836e-35f86b66362e",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 13 Pro",
+      "storage_options": [128, 256, 512, 1024],
+      "ram_options": [],
+      "color_options": ["Graphite", "gold", "silver", "sierra blue", "alpine green"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "5363ad01-3a60-4978-8b8a-f5e08f76b5d8",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 13",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["(PRODUCT)RED", "starlight", "midnight", "blue", "pink", "green"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "57210798-4d94-43cc-8a0e-bceea1a63ce9",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 13 mini",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["(PRODUCT)RED", "starlight", "midnight", "blue", "pink", "green"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "9af2494f-6aff-4dcd-84dc-8aabd7125163",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 12 Pro Max",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Silver", "graphite", "gold", "pacific blue"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "c92306c1-302e-4c91-8f02-bb3c43695c04",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 12 Pro",
+      "storage_options": [128, 256, 512],
+      "ram_options": [],
+      "color_options": ["Silver", "graphite", "gold", "pacific blue"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "b9728d86-a9e1-4eaa-8a37-0cd56a144b4d",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 12",
+      "storage_options": [64, 128, 256],
+      "ram_options": [],
+      "color_options": ["Black", "white", "(PRODUCT)RED", "green", "blue", "purple"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "a06530b9-e28f-4628-8e5c-d906331743c4",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 12 mini",
+      "storage_options": [64, 128, 256],
+      "ram_options": [],
+      "color_options": ["Black", "white", "(PRODUCT)RED", "green", "blue", "purple"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "ad257ad1-c366-459d-8326-97c09ddac4b9",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone SE (2nd generation)",
+      "storage_options": [64, 128, 256],
+      "ram_options": [],
+      "color_options": ["White", "black", "(PRODUCT)RED"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "63aadca0-6dcd-4137-8089-157adffb25e5",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 11 Pro",
+      "storage_options": [64, 256, 512],
+      "ram_options": [],
+      "color_options": ["Silver", "space gray", "gold", "midnight green"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "7ccbb470-1fce-4488-886c-f3512ecfd95a",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 11 Pro Max",
+      "storage_options": [64, 256, 512],
+      "ram_options": [],
+      "color_options": ["Silver", "space gray", "gold", "midnight green"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "95b2aac6-acc3-4941-809c-04dcb415fe13",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone 11",
+      "storage_options": [64, 128, 256],
+      "ram_options": [],
+      "color_options": ["Purple", "green", "yellow", "black", "white", "(PRODUCT)RED"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "686ddfcb-5612-488c-8fbe-c6d8445a8d6e",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone XS",
+      "storage_options": [64, 256, 512],
+      "ram_options": [],
+      "color_options": ["Silver", "space gray", "gold"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "ad661c13-e267-468f-88b9-204968d1d60f",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone XS Max",
+      "storage_options": [64, 256, 512],
+      "ram_options": [],
+      "color_options": ["Silver", "space gray", "gold"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "b7be2fb1-e189-4da8-8227-674b0afb9a3c",
+      "brand_slug": "apple",
+      "category_slug": "iphone",
+      "name": "iPhone XR",
+      "storage_options": [64, 128, 256],
+      "ram_options": [],
+      "color_options": ["Black", "white", "blue", "yellow", "coral", "(PRODUCT)RED"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/108044",
+      "is_active": true
+    },
+    {
+      "id": "aed473e9-aa44-4fa1-8c4e-6f1dc9e6e447",
+      "brand_slug": "apple",
+      "category_slug": "tablet",
+      "name": "iPad (10th generation)",
+      "storage_options": [64, 256],
+      "ram_options": [],
+      "color_options": ["Silver", "Blue", "Pink", "Yellow"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/111840",
+      "is_active": true
+    },
+    {
+      "id": "0aa63923-b58d-42df-8298-8153d959907c",
+      "brand_slug": "apple",
+      "category_slug": "laptop",
+      "name": "MacBook Air (M1, 2020)",
+      "storage_options": [256, 512, 1024, 2048],
+      "ram_options": [8, 16],
+      "color_options": ["Gold", "Silver", "Space Gray"],
+      "variants": [],
+      "source_url": "https://support.apple.com/en-us/111883",
+      "is_active": true
+    },
+    {
+      "id": "24f24d96-2241-467e-81da-6d33937eac87",
+      "brand_slug": "samsung",
+      "category_slug": "android",
+      "name": "Galaxy A55 5G",
+      "storage_options": [128, 256],
+      "ram_options": [8, 12],
+      "color_options": ["Awesome Iceblue", "Awesome Navy", "Awesome Lilac"],
+      "variants": [
+        {
+          "storage_gb": 128,
+          "ram_gb": 8
+        },
+        {
+          "storage_gb": 256,
+          "ram_gb": 8
+        },
+        {
+          "storage_gb": 256,
+          "ram_gb": 12
+        }
+      ],
+      "source_url": "https://news.samsung.com/id/5-alasan-galaxy-a55-5g-cocok-buatmu-performanya-menyala",
+      "is_active": true
+    },
+    {
+      "id": "738e0368-20e9-409b-8516-725e9eeadcf7",
+      "brand_slug": "samsung",
+      "category_slug": "android",
+      "name": "Galaxy S23",
+      "storage_options": [128, 256],
+      "ram_options": [8],
+      "color_options": ["Phantom Black", "Cream", "Green", "Lavender"],
+      "variants": [],
+      "source_url": "https://image-us.samsung.com/SamsungUS/samsungbusiness/pdf/spec-sheets/s23/att/hhp-s23-spec-att.pdf",
+      "is_active": true
+    },
+    {
+      "id": "f369b11f-2092-4070-86f1-129963caf8ad",
+      "brand_slug": "xiaomi",
+      "category_slug": "android",
+      "name": "Redmi Note 13",
+      "storage_options": [256],
+      "ram_options": [8],
+      "color_options": ["Midnight Black", "Ice Blue", "Ocean Sunset"],
+      "variants": [],
+      "source_url": "https://www.mi.co.id/id/product/redmi-note-13/specs/",
+      "is_active": true
+    },
+    {
+      "id": "1323b509-19e1-4143-8513-dfb28f42ee35",
+      "brand_slug": "xiaomi",
+      "category_slug": "tablet",
+      "name": "Xiaomi Pad 6",
+      "storage_options": [256],
+      "ram_options": [8],
+      "color_options": ["Gravity Gray", "Mist Blue"],
+      "variants": [],
+      "source_url": "https://www.mi.co.id/id/product/xiaomi-pad-6/specs/",
+      "is_active": true
+    },
+    {
+      "id": "0343eb1f-1e9c-4cdc-8a3e-d03b57f1ebf0",
+      "brand_slug": "poco",
+      "category_slug": "android",
+      "name": "POCO X6 Pro 5G",
+      "storage_options": [512],
+      "ram_options": [12],
+      "color_options": ["Black", "Yellow", "Grey"],
+      "variants": [],
+      "source_url": "https://www.mi.co.id/id/product/poco-x6-pro/specs/",
+      "is_active": true
+    },
+    {
+      "id": "f18f9917-f331-4efa-8c78-9395062d5743",
+      "brand_slug": "oppo",
+      "category_slug": "android",
+      "name": "Reno12 F",
+      "storage_options": [256],
+      "ram_options": [8],
+      "color_options": ["Oranye", "Hijau", "Abu-abu"],
+      "variants": [],
+      "source_url": "https://www.oppo.com/id/smartphones/series-reno/reno12-f-4g/specs/",
+      "is_active": true
+    },
+    {
+      "id": "5b374c2b-e599-4653-8446-d429b7fb9d2f",
+      "brand_slug": "oppo",
+      "category_slug": "android",
+      "name": "Reno12 F 5G",
+      "storage_options": [256, 512],
+      "ram_options": [8, 12],
+      "color_options": ["Amber Orange", "Olive Green"],
+      "variants": [
+        {
+          "storage_gb": 256,
+          "ram_gb": 8
+        },
+        {
+          "storage_gb": 256,
+          "ram_gb": 12
+        },
+        {
+          "storage_gb": 512,
+          "ram_gb": 12
+        }
+      ],
+      "source_url": "https://www.oppo.com/en/smartphones/series-reno/reno12-f-5g/specs/",
+      "is_active": true
+    },
+    {
+      "id": "94a869d3-99e1-4e6d-8f6a-b9ac5637def7",
+      "brand_slug": "vivo",
+      "category_slug": "android",
+      "name": "V30",
+      "storage_options": [256, 512],
+      "ram_options": [8, 12],
+      "color_options": ["Hijau Khatulistiwa", "Putih Puspa", "Hitam Vulkanik"],
+      "variants": [
+        {
+          "storage_gb": 256,
+          "ram_gb": 8
+        },
+        {
+          "storage_gb": 512,
+          "ram_gb": 12
+        }
+      ],
+      "source_url": "https://www.vivo.com/id/products/param/v30",
+      "is_active": true
+    },
+    {
+      "id": "92fe217d-a1ff-4721-8956-4c5a993eb45f",
+      "brand_slug": "realme",
+      "category_slug": "android",
+      "name": "realme 12+ 5G",
+      "storage_options": [256],
+      "ram_options": [8],
+      "color_options": ["Pioneer Green", "Navigator Beige"],
+      "variants": [],
+      "source_url": "https://www.realme.com/id/realme-12-plus/specs",
+      "is_active": true
+    },
+    {
+      "id": "fc6bac17-90e4-41c0-8ff5-1d0b7d5c3c71",
+      "brand_slug": "infinix",
+      "category_slug": "android",
+      "name": "NOTE 40",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://id.infinixmobility.com/note-40",
+      "is_active": true
+    },
+    {
+      "id": "43ac4cc0-ef8a-4328-88e5-4a266aa33790",
+      "brand_slug": "tecno",
+      "category_slug": "android",
+      "name": "SPARK 20",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.tecno-mobile.com/id/phones/tech-specs/techspecs/spark-20/",
+      "is_active": true
+    },
+    {
+      "id": "cc91018a-ac6a-4427-8966-5eede1e32081",
+      "brand_slug": "asus",
+      "category_slug": "laptop",
+      "name": "Zenbook 14 OLED (UX3402)",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.asus.com/id/laptops/for-home/zenbook/zenbook-14-oled-ux3402/techspec/",
+      "is_active": true
+    },
+    {
+      "id": "0e56b0e9-5067-4b55-843d-59fa6ca6b484",
+      "brand_slug": "lenovo",
+      "category_slug": "laptop",
+      "name": "ThinkPad T14 Gen 2 (Intel)",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://psref.lenovo.com/Product/ThinkPad/ThinkPad_T14_Gen_2_Intel",
+      "is_active": true
+    },
+    {
+      "id": "77eef495-b01e-4a76-8ed2-15d8ee756a21",
+      "brand_slug": "dell",
+      "category_slug": "laptop",
+      "name": "Latitude 5420",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.dell.com/support/manuals/en-us/latitude-5420-laptop/5420_sp14_setupspecs/",
+      "is_active": true
+    },
+    {
+      "id": "b180442b-97a9-438f-8f87-0b54a61ef869",
+      "brand_slug": "huawei",
+      "category_slug": "tablet",
+      "name": "MatePad 11 (2023)",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://consumer.huawei.com/id/tablets/matepad-11-2023/specs/",
+      "is_active": true
+    },
+    {
+      "id": "9d0dde7a-352e-4b94-8a11-e92496551fff",
+      "brand_slug": "google",
+      "category_slug": "android",
+      "name": "Pixel 8",
+      "storage_options": [128, 256],
+      "ram_options": [8],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://support.google.com/pixelphone/answer/7158570?hl=en",
+      "is_active": true
+    },
+    {
+      "id": "b33721e6-146a-4ea6-820f-40c92678fc5b",
+      "brand_slug": "google",
+      "category_slug": "android",
+      "name": "Pixel 8a",
+      "storage_options": [128, 256],
+      "ram_options": [8],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://support.google.com/pixelphone/answer/7158570?hl=en",
+      "is_active": true
+    },
+    {
+      "id": "9b9bc157-d75c-47fc-85e6-e8a69da23c5b",
+      "brand_slug": "nothing",
+      "category_slug": "android",
+      "name": "Phone (2a)",
+      "storage_options": [128, 256],
+      "ram_options": [8, 12],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://intl.nothing.tech/products/phone-2a",
+      "is_active": true
+    },
+    {
+      "id": "1f75819f-06c1-43c2-8334-8f1d0d303cb8",
+      "brand_slug": "oneplus",
+      "category_slug": "android",
+      "name": "OnePlus 12R",
+      "storage_options": [128, 256],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.oneplus.in/12r/specs",
+      "is_active": true
+    },
+    {
+      "id": "a6ff5d56-b8b3-4ff6-88cc-81535c45ff59",
+      "brand_slug": "nokia",
+      "category_slug": "android",
+      "name": "Nokia G42 5G",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.hmd.com/en_in/nokia-g-42/specs",
+      "is_active": true
+    },
+    {
+      "id": "c991d3d6-08f1-4ae5-82df-63d6f263ad17",
+      "brand_slug": "honor",
+      "category_slug": "android",
+      "name": "HONOR 90",
+      "storage_options": [256, 512],
+      "ram_options": [8, 12],
+      "color_options": [],
+      "variants": [
+        {
+          "storage_gb": 256,
+          "ram_gb": 8
+        },
+        {
+          "storage_gb": 512,
+          "ram_gb": 12
+        }
+      ],
+      "source_url": "https://www.honor.com/uk/phones/honor-90/spec/",
+      "is_active": true
+    },
+    {
+      "id": "444b357d-0c1c-4d28-8450-933e8b050ead",
+      "brand_slug": "sony",
+      "category_slug": "android",
+      "name": "Xperia 1 V",
+      "storage_options": [256],
+      "ram_options": [12],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.sony.com/electronics/support/mobile-phones-tablets-mobile-phones/xperia-1-v-256gb/specifications",
+      "is_active": true
+    },
+    {
+      "id": "eedb0218-c54a-4b26-8df4-9340678ac67d",
+      "brand_slug": "motorola",
+      "category_slug": "android",
+      "name": "moto g84 5G",
+      "storage_options": [256],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://en-us.support.motorola.com/app/answers/detail/a_id/176650/~/especificaciones---moto-g84-5g/",
+      "is_active": true
+    },
+    {
+      "id": "87740fa5-096f-4254-80fc-50fa72c522da",
+      "brand_slug": "acer",
+      "category_slug": "laptop",
+      "name": "Aspire 5 (A515-58M)",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://www.acer.com/nextatacer/mediacenter/20230103/2023_CES_H2H-Spec-Sheet.pdf",
+      "is_active": true
+    },
+    {
+      "id": "f9848bf4-496b-47f5-8e5b-f81994f806b3",
+      "brand_slug": "hp",
+      "category_slug": "laptop",
+      "name": "EliteBook 840 G8",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://support.hp.com/ie-en/document/c06978058",
+      "is_active": true
+    },
+    {
+      "id": "45be13bf-8c49-4d9b-82a3-b214eff88ba9",
+      "brand_slug": "msi",
+      "category_slug": "laptop",
+      "name": "Modern 14 C12M",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://au.msi.com/Business-Productivity/Modern-14-C12X/Specification",
+      "is_active": true
+    },
+    {
+      "id": "efe83f5e-f9f5-4e8e-844f-754dcd88b162",
+      "brand_slug": "microsoft",
+      "category_slug": "tablet",
+      "name": "Surface Pro 9",
+      "storage_options": [],
+      "ram_options": [],
+      "color_options": [],
+      "variants": [],
+      "source_url": "https://support.microsoft.com/en-us/surface/models/surface-pro-9-features-and-specs",
+      "is_active": true
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+project_id = "second-device"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173/admin/atur-password", "http://127.0.0.1:5173/admin/atur-password"]
+enable_signup = false
+minimum_password_length = 12
+
+[storage]
+enabled = true
+file_size_limit = "5MiB"
+
+[functions.submit-trade-in]
+verify_jwt = false
+
+[functions.manage-admin]
+verify_jwt = false
+
+[functions.submit-review]
+verify_jwt = false
