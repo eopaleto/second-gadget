@@ -67,4 +67,6 @@ Ketiga tabel harus menunjukkan `ready: true`. Script ini tidak memeriksa CAPTCHA
 
 Tes mencakup sesi/fokus dengan dialog asli, draft form, pemilihan dan penyimpanan model, kapasitas, filter koleksi, tautan footer, tren tanggal WIB, validasi ulasan, migration berulang, atomic write, dan izin database. Endpoint ulasan diperiksa dengan `deno check`.
 
-Uji login, CAPTCHA, pengiriman ulasan, Storage, dan tampilan pada browser setelah backend diperbarui. Pemeriksaan visual otomatis pada lingkungan pengerjaan belum tersedia karena browser gagal memulai sandbox Windows; hasil visual/Lighthouse tidak diklaim sudah terverifikasi.
+Pada 30 Oktober 2026, tampilan publik diperiksa menggunakan Chrome lokal melalui Playwright: 21 tampilan halaman pada lebar 320, 375, 390, 768, 1024, 1280, dan 1440 piksel. Pemeriksaan mencakup batas elemen navbar, pencarian desktop tanpa modal, pencarian mobile, logo rata kiri, tombol cari mobile yang menonjol, jeda animasi banner, dan reduced motion. Hasil serta screenshot tersimpan di `artifacts/responsive`. Data pengujian browser diisolasi dan tidak ditulis ke database.
+
+Untuk mengulang pemeriksaan tersebut pada komputer dengan Chrome terpasang, jalankan `npm run dev`, lalu di terminal lain jalankan `npm exec --yes --package=playwright -- node scripts/responsive-smoke.cjs`. Browser bawaan lingkungan masih gagal memulai sandbox Windows, sehingga pemeriksaan memakai Chrome lokal. Lighthouse belum diukur. Login, CAPTCHA, pengiriman ulasan, dan Storage tetap perlu diuji dengan konfigurasi layanan yang sebenarnya.

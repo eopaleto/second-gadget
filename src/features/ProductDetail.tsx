@@ -176,7 +176,7 @@ export default function ProductDetail() {
               </div>
             ))}
           </dl>
-          <div className="sticky bottom-[calc(4rem+env(safe-area-inset-bottom))] z-20 -mx-2 mt-7 bg-white/95 p-2 backdrop-blur-sm lg:static">
+          <div className="sticky bottom-[calc(6.5rem+env(safe-area-inset-bottom))] z-20 -mx-2 mt-7 bg-white/95 p-2 backdrop-blur-sm lg:static">
             {available && wa ? (
               <a
                 href={wa}

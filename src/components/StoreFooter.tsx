@@ -92,32 +92,41 @@ export default function StoreFooter({
     { name: 'Facebook', url: settings.facebook_url || '', icon: Facebook },
     { name: 'TikTok', url: settings.tiktok_url || '', icon: Music2 },
     { name: 'YouTube', url: settings.youtube_url || '', icon: Youtube },
-    { name: 'WhatsApp', url: wa || '', icon: FaWhatsapp  },
+    { name: 'WhatsApp', url: wa || '', icon: FaWhatsapp },
   ].filter((s) => safeHttpUrl(s.url))
   return (
     <footer className="mt-20 bg-[#111720] py-12 text-white sm:mt-24 sm:py-16">
       <div className={container}>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-10 break-words sm:grid-cols-2 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)] [&>div]:min-w-0">
           <div>
             <Link
               to="/"
               aria-label={`${settings.store_name} — Beranda`}
               className="inline-flex min-h-11 shrink-0 items-center"
             >
-              <img
-                src={imageUrl(settings.logo_path)}
-                alt={settings.store_name}
-                width="160"
-                height="48"
-                className="max-h-12 max-w-40 object-contain brightness-0 invert"
-              />
+              {settings.logo_path && imageUrl(settings.logo_path) ? (
+                <img
+                  src={imageUrl(settings.logo_path)}
+                  alt={settings.store_name}
+                  width="160"
+                  height="48"
+                  className="max-h-12 max-w-40 object-contain brightness-0 invert"
+                />
+              ) : (
+                <span className="text-lg font-extrabold tracking-tight">{settings.store_name}</span>
+              )}
             </Link>
             <p className="mt-5 text-sm text-white/65">{settings.tagline}</p>
             <p className="mt-3 max-w-xs text-xs leading-7 text-white/50">
               Temukan perangkat untuk cerita berikutnya. Jual, beli, dan diskusikan trade in
               langsung dengan toko.
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
+            {socials.length > 0 && (
+              <h2 className="mt-6 text-xs font-bold uppercase tracking-widest text-white/65">
+                Ikuti Kami
+              </h2>
+            )}
+            <div className="mt-3 flex flex-wrap gap-2">
               {socials.map((s) => (
                 <a
                   key={s.name}
@@ -208,7 +217,6 @@ export default function StoreFooter({
                 </div>
               </div>
             )}
-
           </div>
         </div>
 

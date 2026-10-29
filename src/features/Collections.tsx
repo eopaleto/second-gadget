@@ -62,7 +62,7 @@ export default function Collections({ products }: { products: Product[] }) {
             ) : (
               <div className="flex flex-wrap items-center gap-5 rounded-xl border border-line bg-paper/50 p-7">
                 <c.icon size={36} strokeWidth={1.2} className="text-navy" />
-                <div className="flex-1">
+                <div className="min-w-0 flex-1 basis-44">
                   <h3 className="font-bold">Pilihan {c.label.toLowerCase()} sedang disiapkan.</h3>
                   <p className="mt-2 text-xs leading-6 text-muted">
                     Belum ada unit bekas bergaransi yang tersedia pada koleksi ini.
@@ -114,9 +114,11 @@ export function StoreVisit({ settings }: { settings: StoreSettings }) {
     ? `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`
     : null
 
-  const directionsUrl = map || (address
-    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-    : null)
+  const directionsUrl =
+    map ||
+    (address
+      ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+      : null)
 
   return (
     <Reveal className={`${container} pt-20`}>
@@ -171,9 +173,7 @@ export function StoreVisit({ settings }: { settings: StoreSettings }) {
           ) : (
             <div className="flex h-full min-h-[320px] flex-col items-center justify-center p-8 text-center">
               <MapPin size={36} className="text-muted" strokeWidth={1.5} />
-              <p className="mt-4 text-sm font-medium text-navy">
-                Lokasi toko belum tersedia
-              </p>
+              <p className="mt-4 text-sm font-medium text-navy">Lokasi toko belum tersedia</p>
               <p className="mt-2 text-xs text-muted">
                 Peta akan ditampilkan setelah alamat toko ditambahkan.
               </p>

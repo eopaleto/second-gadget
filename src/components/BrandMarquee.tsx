@@ -30,7 +30,7 @@ export default function BrandMarquee({ brands }: { brands: Brand[] }) {
             <div
               key={copy}
               aria-hidden={copy === 1 ? true : undefined}
-              className={`flex shrink-0 items-center motion-reduce:flex-wrap ${copy === 1 ? 'motion-reduce:hidden' : ''}`}
+              className={`flex shrink-0 items-center motion-reduce:w-full motion-reduce:flex-wrap ${copy === 1 ? 'motion-reduce:hidden' : ''}`}
             >
               {all.map((b) => (
                 <Link
@@ -38,7 +38,7 @@ export default function BrandMarquee({ brands }: { brands: Brand[] }) {
                   to={`/gadget?brand=${encodeURIComponent(b.slug)}`}
                   tabIndex={copy === 1 ? -1 : 0}
                   aria-label={`Lihat gadget ${b.name}`}
-                  className="flex h-16 w-36 shrink-0 items-center justify-center px-7 opacity-65 transition hover:opacity-100 focus:opacity-100 motion-reduce:w-28"
+                  className="flex h-16 w-32 shrink-0 items-center justify-center px-6 transition-transform hover:scale-105 focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-navy sm:w-36 sm:px-7 motion-reduce:w-28 motion-reduce:transform-none"
                 >
                   {brandLogo(b) ? (
                     <img

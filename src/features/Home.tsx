@@ -1,4 +1,5 @@
 import BrandMarquee from '../components/BrandMarquee'
+import EditorialBanner from '../components/EditorialBanner'
 import Collections, { StoreVisit } from './Collections'
 import { Link } from 'react-router-dom'
 import {
@@ -39,7 +40,7 @@ export default function Home() {
   return (
     <>
       <section className={`${container} pt-8 sm:pt-12 lg:pt-14`}>
-        <div className="grid overflow-hidden rounded-2xl bg-[#f1f2f3] lg:min-h-[520px] lg:grid-cols-[1.06fr_1fr]">
+        <div className="grid min-w-0 overflow-hidden rounded-2xl bg-[#f1f2f3] lg:min-h-[520px] lg:grid-cols-[minmax(0,1.06fr)_minmax(0,1fr)]">
           <div className="relative flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-14 lg:px-12">
             <Eyebrow>Second device. A better choice.</Eyebrow>
             <h1 className="max-w-xl text-[42px] font-extrabold leading-[1.12] tracking-[-0.06em] sm:text-[54px] xl:text-[64px]">
@@ -83,33 +84,7 @@ export default function Home() {
             </div>
             <Plus size={17} strokeWidth={1} className="absolute right-5 top-5 text-gray-400" />
           </div>
-          <div className="relative min-h-[320px] overflow-hidden bg-[#17191b] sm:min-h-[440px]">
-            <img
-              src="/images/editorial-iphone.webp"
-              alt="Foto editorial detail iPhone berwarna silver di atas permukaan gelap"
-              width="1200"
-              height="1600"
-              fetchPriority="high"
-              className="absolute size-full object-cover object-center"
-            />
-            <div className="absolute left-6 right-6 top-6 flex justify-between text-[9px] font-semibold tracking-[0.2em] text-white/80">
-              <span>SECOND LOOK. FIRST LOVE.</span>
-              <ArrowUpRight size={19} />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-6 pt-16 text-white sm:p-8 sm:pt-16">
-              <div className="flex items-end justify-between gap-5">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-white/60">
-                    A new chapter
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">
-                    Masih banyak cerita.
-                  </p>
-                </div>
-              </div>
-              <p className="mt-4 text-[9px] text-white/60">Foto editorial · bukan foto unit stok</p>
-            </div>
-          </div>
+          <EditorialBanner />
         </div>
         <div className="grid gap-6 border-b border-line py-7 sm:grid-cols-3">
           {[

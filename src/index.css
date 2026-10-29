@@ -1,6 +1,33 @@
 @import 'tailwindcss';
 
 @theme {
+  --animate-editorial-float: editorial-float 12s ease-in-out infinite;
+  --animate-editorial-shine: editorial-shine 12s ease-in-out infinite;
+  @keyframes editorial-float {
+    0%,
+    100% {
+      transform: translate3d(-0.5%, 0, 16px) rotateX(3deg) rotateY(-5deg) scale(1.04);
+    }
+    50% {
+      transform: translate3d(0.5%, -1%, 24px) rotateX(-3deg) rotateY(5deg) scale(1.07);
+    }
+  }
+  @keyframes editorial-shine {
+    0%,
+    15% {
+      transform: translateX(-200%) skewX(-18deg);
+      opacity: 0;
+    }
+    35%,
+    55% {
+      opacity: 1;
+    }
+    80%,
+    100% {
+      transform: translateX(350%) skewX(-18deg);
+      opacity: 0;
+    }
+  }
   --animate-brand-scroll: brand-scroll 70s linear infinite;
   @keyframes brand-scroll {
     from {

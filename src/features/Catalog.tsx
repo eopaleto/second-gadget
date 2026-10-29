@@ -289,7 +289,7 @@ export default function Catalog() {
           onChange={(e) => change('q', e.target.value)}
         />
       </div>
-      <div className="mt-8 grid items-start gap-8 lg:grid-cols-[250px_1fr]">
+      <div className="mt-8 grid items-start gap-8 lg:grid-cols-[250px_minmax(0,1fr)]">
         <aside className="hidden rounded-xl border border-line p-5 lg:block">
           {controls('desktop')}
         </aside>
@@ -298,7 +298,7 @@ export default function Catalog() {
             <p role="status" aria-live="polite" className="text-xs text-muted">
               <strong className="text-ink">{products.length}</strong> unit ditemukan
             </p>
-            <div className="flex gap-2">
+            <div className="flex w-full min-w-0 flex-wrap gap-2 sm:w-auto">
               <Button
                 secondary
                 onClick={() => setFilterOpen(true)}
@@ -312,7 +312,7 @@ export default function Catalog() {
               </label>
               <select
                 id="sort"
-                className={`${inputClass} !w-auto !text-xs`}
+                className={`${inputClass} min-w-0 flex-1 !w-auto !text-xs sm:flex-none`}
                 value={params.get('sort') || 'newest'}
                 onChange={(e) => change('sort', e.target.value)}
               >
@@ -360,7 +360,7 @@ export default function Catalog() {
               {products.length > perPage && (
                 <nav
                   aria-label="Halaman katalog"
-                  className="mt-8 flex items-center justify-center gap-4"
+                  className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-4"
                 >
                   <Button
                     secondary

@@ -36,7 +36,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         )}
       </div>
-      <div className="flex flex-1 flex-col pt-4">
+      <div className="flex min-w-0 flex-1 flex-col break-words pt-4">
         <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-muted">
           {product.brands?.name}
         </p>
