@@ -1,14 +1,8 @@
 import ReviewForm from './ReviewForm'
+import { RatingStars } from '../components/StarRating'
+import ReviewSummary from '../components/ReviewSummary'
 import { Link, useLocation } from 'react-router-dom'
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Clock,
-  Instagram,
-  MapPin,
-  MessageCircle,
-  Star,
-} from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Clock, Instagram, MapPin, MessageCircle } from 'lucide-react'
 import { useStore, defaults } from '../lib/data'
 import { activePromotions, dateLabel, safeHttpUrl, whatsappLink } from '../lib/utils'
 import {
@@ -69,7 +63,7 @@ export default function Information() {
                       alt={p.title}
                       width="1100"
                       height="400"
-                      className="mb-6 max-h-80 w-full rounded-lg object-cover"
+                      className="mb-6 h-auto w-full rounded-lg"
                     />
                   )}
                   <h2 className="text-2xl font-bold">{p.title}</h2>
@@ -145,9 +139,6 @@ export default function Information() {
               height="700"
               className="h-[400px] w-full object-cover sm:h-[500px]"
             />
-            <p className="p-3 text-center text-[10px] text-muted">
-              Foto editorial · bukan foto unit stok atau toko
-            </p>
           </div>
         </div>
       )}
@@ -236,6 +227,7 @@ export default function Information() {
       {pathname === '/ulasan' && (
         <>
           <ReviewForm />
+          {!isPending && !isError && <ReviewSummary reviews={data?.reviews || []} />}
           <p className="mb-10 text-sm leading-7 text-muted">
             Pengalaman pelanggan yang sudah disetujui untuk dipublikasikan.
           </p>
@@ -244,13 +236,7 @@ export default function Information() {
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {data.reviews.map((r) => (
                   <article key={r.id} className="rounded-xl border border-line p-7">
-                    {r.rating && (
-                      <div className="mb-4 flex gap-1" aria-label={`${r.rating} dari 5 bintang`}>
-                        {Array.from({ length: r.rating }, (_, i) => (
-                          <Star key={i} size={15} className="fill-navy text-navy" />
-                        ))}
-                      </div>
-                    )}
+                    {r.rating ? <RatingStars value={r.rating} className="mb-4" /> : null}
                     <p className="whitespace-pre-line text-sm leading-7">“{r.body}”</p>
                     <h2 className="mt-5 text-sm font-bold">{r.display_name}</h2>
                     <p className="mt-2 text-[10px] text-muted">{dateLabel(r.created_at)}</p>

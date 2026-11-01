@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Field, inputClass } from '../components/ui'
 import Turnstile from '../components/Turnstile'
+import StarRating from '../components/StarRating'
 import { isConfigured, requireSupabase } from '../lib/supabase'
 
 export default function ReviewForm() {
   const [name, setName] = useState(''),
-    [rating, setRating] = useState(''),
+    [rating, setRating] = useState(0),
     [body, setBody] = useState(''),
     [consent, setConsent] = useState(false),
     [website, setWebsite] = useState(''),
@@ -19,8 +20,10 @@ export default function ReviewForm() {
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
-    if (!token || !consent || !name.trim() || body.trim().length < 10) {
-      setError('Lengkapi nama, ulasan minimal 10 karakter, persetujuan, dan verifikasi.')
+    if (!token || !consent || !name.trim() || body.trim().length < 10 || rating < 1 || rating > 5) {
+      setError(
+        'Lengkapi nama, penilaian bintang, ulasan minimal 10 karakter, persetujuan, dan verifikasi.',
+      )
       return
     }
     setBusy(true)
@@ -84,22 +87,7 @@ export default function ReviewForm() {
                 onChange={(e) => setName(e.target.value)}
               />
             </Field>
-            <Field label="Penilaian" htmlFor="review-rating">
-              <select
-                id="review-rating"
-                required
-                className={inputClass}
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-              >
-                <option value="">Pilih rating</option>
-                {[5, 4, 3, 2, 1].map((n) => (
-                  <option key={n} value={n}>
-                    {n} dari 5 bintang
-                  </option>
-                ))}
-              </select>
-            </Field>
+            <StarRating value={rating} onChange={setRating} />
             <div className="sm:col-span-2">
               <Field label="Pengalaman kamu" htmlFor="review-body">
                 <textarea

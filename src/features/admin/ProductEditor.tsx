@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link } from 'react-router-dom'
-import { ArrowUpRight, ImagePlus, X } from 'lucide-react'
-import { Button, Field, FileDropzone, inputClass } from '../../components/ui'
+import { ArrowUpRight, ImagePlus, Trash2 } from 'lucide-react'
+import { Button, Field, FileDropzone, inputClass, Loading } from '../../components/ui'
+import ImagePreview from '../../components/ImagePreview'
+import { readProductDraft, writeProductDraft, clearProductDraft } from '../../lib/product-drafts'
 import { imageUrl, requireSupabase } from '../../lib/supabase'
 import { productSchema, validatePhoto, type ProductInput } from '../../lib/validation'
 import { slugify } from '../../lib/utils'
@@ -25,6 +27,7 @@ export default function ProductEditor({
   onSaved,
   onCancel,
   onBusyChange,
+  draftKey = '',
 }: {
   product: Product | null
   brands: Brand[]
@@ -33,6 +36,7 @@ export default function ProductEditor({
   onSaved: () => void
   onCancel: () => void
   onBusyChange: (busy: boolean) => void
+  draftKey?: string
 }) {
   const [images, setImages] = useState<ProductImage[]>(product?.product_images || []),
     [files, setFiles] = useState<File[]>([]),
@@ -44,6 +48,7 @@ export default function ProductEditor({
     handleSubmit,
     setValue,
     getValues,
+    reset,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<ProductInput>({
@@ -89,6 +94,65 @@ export default function ProductEditor({
     ),
   )
   const [modelSearch, setModelSearch] = useState('')
+  const [draftReady, setDraftReady] = useState(!draftKey)
+  const [draftMessage, setDraftMessage] = useState('')
+  const cleared = useRef(false)
+  const originalValues = useRef(getValues())
+  const draftValues = watch()
+  useEffect(() => {
+    if (!draftKey) return
+    let active = true
+    readProductDraft(draftKey)
+      .then((draft) => {
+        if (!active) return
+        if (draft) {
+          reset(draft.values)
+          setImages(draft.images)
+          setFiles(draft.files)
+          setManualModel(draft.manualModel)
+          setDraftMessage('Draf sebelumnya dipulihkan, termasuk foto yang dipilih.')
+        }
+      })
+      .catch(() => {
+        if (active)
+          setDraftMessage(
+            'Penyimpanan draf tidak tersedia. Hindari menutup modal sebelum menyimpan.',
+          )
+      })
+      .finally(() => {
+        if (active) setDraftReady(true)
+      })
+    return () => {
+      active = false
+    }
+  }, [draftKey, reset])
+  useEffect(() => {
+    if (!draftKey || !draftReady || cleared.current) return
+    void writeProductDraft(draftKey, { values: getValues(), images, files, manualModel }).catch(
+      () => {
+        setDraftMessage(
+          'Draf belum tersimpan di perangkat. Hindari menutup modal sebelum menyimpan.',
+        )
+      },
+    )
+  }, [draftKey, draftReady, draftValues, images, files, manualModel, getValues])
+  async function discardDraft() {
+    if (!window.confirm('Buang draf dan foto yang belum disimpan?')) return
+    cleared.current = true
+    try {
+      if (draftKey) await clearProductDraft(draftKey)
+      reset(originalValues.current)
+      setImages(product?.product_images || [])
+      setFiles([])
+      setManualModel(Boolean(product && !product.model_id))
+      setDraftMessage('Draf dibuang. Formulir dikembalikan ke data awal.')
+    } catch {
+      setDraftMessage('Draf belum dapat dibuang. Silakan coba lagi.')
+    } finally {
+      cleared.current = false
+    }
+  }
+
   const filteredModels = availableModels.filter(
     (m) => m.id === selectedModel?.id || m.name.toLowerCase().includes(modelSearch.toLowerCase()),
   )
@@ -203,16 +267,32 @@ export default function ProductEditor({
       const removed = (product?.product_images || [])
         .filter((im) => !images.some((existing) => existing.storage_path === im.storage_path))
         .map((im) => im.storage_path)
-      if (removed.length) await db.storage.from('product-images').remove(removed)
+      if (removed.length)
+        await db.storage
+          .from('product-images')
+          .remove(removed)
+          .catch(() => {})
       setProgress(100)
+      cleared.current = true
+      if (draftKey) await clearProductDraft(draftKey).catch(() => {})
       onSaved()
     } catch (e) {
       if (uploaded.length) await db.storage.from('product-images').remove(uploaded)
       setError(e instanceof Error ? e.message : 'Produk gagal disimpan.')
     }
   }
+  if (!draftReady) return <Loading label="Memulihkan draf produk..." />
   return (
     <form onSubmit={handleSubmit(save)} className="space-y-7" noValidate>
+      {draftKey && (
+        <div
+          role="status"
+          className="rounded-lg border border-line bg-paper p-3 text-xs leading-6 text-muted"
+        >
+          {draftMessage ||
+            'Draf dan foto disimpan otomatis di perangkat ini. Buka kembali produk yang sama untuk melanjutkan.'}
+        </div>
+      )}
       <fieldset disabled={isSubmitting} className="space-y-7">
         <div className="rounded-xl border border-line bg-paper/60 p-5">
           <p className="mb-5 text-xs font-bold uppercase tracking-wider text-muted">
@@ -572,7 +652,7 @@ export default function ProductEditor({
                     )
                   }
                 />
-                <div className="mt-2 flex items-center justify-between">
+                <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
                   <button
                     type="button"
                     className="min-h-10 text-[10px] font-bold"
@@ -584,10 +664,10 @@ export default function ProductEditor({
                   <button
                     type="button"
                     aria-label={`Hapus foto ${i + 1}`}
-                    className="flex size-10 items-center justify-center text-danger"
+                    className="flex min-h-11 items-center justify-center gap-2 rounded-md border border-danger/20 px-3 text-xs font-bold text-danger hover:bg-danger/5"
                     onClick={() => setImages(images.filter((_, n) => n !== i))}
                   >
-                    <X size={15} />
+                    <Trash2 size={15} /> Hapus gambar
                   </button>
                 </div>
               </div>
@@ -605,15 +685,29 @@ export default function ProductEditor({
             hint="JPG, PNG, atau WebP · maks. 5 MB per foto · hingga 12 foto per unit."
             onFiles={(chosen) => {
               const invalid = chosen.map(validatePhoto).find(Boolean)
-              if (invalid || images.length + chosen.length > 12) {
+              if (invalid || images.length + files.length + chosen.length > 12) {
                 setError(invalid || 'Maksimum 12 foto per unit.')
-                setFiles([])
               } else {
                 setError('')
-                setFiles(chosen)
+                setFiles((current) => [...current, ...chosen])
               }
             }}
           />
+          {files.length > 0 && (
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {files.map((file, index) => (
+                <ImagePreview
+                  key={`${file.name}-${file.lastModified}-${index}`}
+                  file={file}
+                  alt={`foto baru ${index + 1}`}
+                  disabled={isSubmitting}
+                  onRemove={() =>
+                    setFiles((current) => current.filter((_, position) => position !== index))
+                  }
+                />
+              ))}
+            </div>
+          )}
           {files.length > 0 && (
             <p className="mt-2 text-xs text-muted">
               {files.length} foto baru akan diunggah saat menyimpan.
@@ -637,8 +731,19 @@ export default function ProductEditor({
           {isSubmitting ? 'Menyimpan…' : 'Simpan unit'}
         </Button>
         <Button type="button" secondary disabled={isSubmitting} onClick={onCancel}>
-          Batal
+          Tutup (simpan draf)
         </Button>
+        {draftKey && (
+          <Button
+            type="button"
+            secondary
+            className="!text-danger"
+            disabled={isSubmitting}
+            onClick={() => void discardDraft()}
+          >
+            Buang draf
+          </Button>
+        )}
         {product && ['available', 'reserved', 'sold'].includes(product.status) && (
           <Link
             to={`/gadget/${product.slug}`}

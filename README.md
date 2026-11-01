@@ -1,5 +1,7 @@
 # Second Device
 
+**Pembaruan role owner/admin dan editor:** ikuti [UPGRADE_OWNER_ADMIN.md](UPGRADE_OWNER_ADMIN.md). Jalankan SQL tambahan dan deploy ulang fungsi `manage-admin` sebelum memakai CRUD akun terbaru.
+
 Website etalase gadget second dengan React + Vite + TypeScript, Tailwind CSS, Supabase, React Router, TanStack Query, React Hook Form + Zod, Motion, dan Lucide.
 
 **Aplikasi disiapkan tanpa inventaris, kontak, promo, atau ulasan rekaan.** Tanpa environment Supabase, halaman publik tetap dapat dibuka dengan empty state. Login dan pengiriman trade in tetap nonaktif. Isi data asli lewat dashboard setelah backend dikonfigurasi.
@@ -49,7 +51,7 @@ Migration `supabase/migrations/202610290001_initial.sql` membuat tabel, index, c
 
 | Bucket             | Akses                                                         |
 | ------------------ | ------------------------------------------------------------- |
-| `product-images`   | Foto etalase publik; penulisan hanya admin/owner              |
+| `product-images`   | Foto etalase publik; penulisan oleh owner/admin setelah migration 005              |
 | `trade-in-private` | Privat; baca melalui signed URL oleh admin; hapus hanya owner |
 
 Tidak ada seed produk. Satu baris pengaturan hanya berisi identitas Second Device dari PRD; kontak dan alamat kosong. Tabel role, transaksi, dan penyimpanan foto dilindungi di database, tidak bergantung pada tombol yang disembunyikan frontend. Lihat [dokumentasi RLS Supabase](https://supabase.com/docs/guides/database/postgres/row-level-security).
@@ -70,7 +72,7 @@ values ('UUID_USER_DARI_AUTH', 'Nama Owner', 'owner');
 4. Masuk lewat `/admin/login`.
 5. Lengkapi **Pengaturan**, kemudian **Produk**. Brand, logo, kategori, dan model awal dipasang oleh migration `003`.
 
-Owner dapat mengundang admin, mengubah role akun lain, dan mencabut akses. Admin biasa tidak dapat mengubah role. Owner tidak dapat menurunkan atau menghapus aksesnya sendiri. Undangan membutuhkan fungsi `manage-admin`, URL redirect, dan layanan email Auth/SMTP yang sudah dikonfigurasi. Akun undangan mengatur password melalui `/admin/atur-password`.
+Owner dapat membuat akun admin langsung dengan nama, email, serta password awal, membaca daftar akun, memperbarui nama/email, dan menghapus akun admin. Admin dapat mengelola seluruh data toko, tetapi menu dan CRUD akun admin khusus owner. Akun owner dilindungi dari pengubahan/penghapusan melalui menu akun admin. Pembuatan akun membutuhkan fungsi `manage-admin` terbaru. Email langsung dikonfirmasi melalui Admin Auth API sehingga tidak memerlukan undangan atau email aktivasi. Admin dapat mengganti password melalui `/admin/pengaturan`.
 
 ## 3. Mengisi toko
 
@@ -110,7 +112,7 @@ npx supabase functions deploy manage-admin
 
 `verify_jwt = false` di `config.toml` disengaja: pengajuan tidak memerlukan login. Fungsi `manage-admin` tetap **memverifikasi JWT caller lewat Auth dan mengecek role owner di database** sebelum menggunakan service role. Jangan menghilangkan pemeriksaan ini.
 
-Di Authentication URL Configuration, set Site URL dan tambahkan `https://DOMAIN_TOKO/admin/atur-password` ke daftar redirect. Atur SMTP untuk pengiriman undangan yang andal. Panduan: [deployment fungsi Supabase](https://supabase.com/docs/guides/functions/deploy).
+Di Authentication URL Configuration, set Site URL dan tambahkan `https://DOMAIN_TOKO/admin/pengaturan` ke daftar redirect. Atur SMTP untuk pengiriman undangan yang andal. Panduan: [deployment fungsi Supabase](https://supabase.com/docs/guides/functions/deploy).
 
 Validasi server mengharuskan consent, nomor Indonesia valid, kapasitas valid, honeypot kosong, CAPTCHA valid dengan hostname dan action `trade_in`, maksimal 4 foto JPG/PNG/WebP masing-masing 5 MB, signature file sesuai, dan body maksimal 21 MB. Token CAPTCHA diverifikasi server, bukan dipercaya dari browser ([dokumentasi Turnstile](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)).
 
@@ -151,7 +153,7 @@ Semua desain halaman menggunakan utility Tailwind. `src/index.css` hanya mengimp
 
 `npm test` menjalankan tes filter gabungan/URL, pesan WhatsApp, kondisi unit terjual, validasi form/foto, serta migration dan RLS pada PostgreSQL WASM (PGlite). Hanya lapisan bawaan Supabase `auth`/`storage` yang disimulasikan pada tes database; SQL migration dan policy aplikasi yang sebenarnya dieksekusi dua kali untuk memeriksa pengulangan yang aman. Tes juga memeriksa pembatasan role, privasi pengajuan/foto, rollback produk-foto, promo habis stok, rate limit, dan audit log.
 
-Tes juga mencakup modal/draft saat pergantian fokus dan pembaruan sesi, dropdown serta penyimpanan model, koleksi bergaransi, tautan footer sesuai stok, grafik tanggal WIB, validasi ulasan pengguna, dan pembatasan admin pada moderasi saja. Tes tersebut tidak menggantikan pengujian Auth, Storage HTTP, pengiriman email, CAPTCHA, dan Edge Functions pada proyek Supabase sungguhan. Pemeriksaan visual browser dan Lighthouse belum dapat dilakukan karena runtime browser lingkungan pengerjaan gagal memulai sandbox Windows. Target Lighthouse/Core Web Vitals belum diklaim tercapai.
+Tes juga mencakup modal/draft saat pergantian fokus dan pembaruan sesi, dropdown serta penyimpanan model, koleksi bergaransi, tautan footer sesuai stok, grafik tanggal WIB, validasi ulasan pengguna, dan pengelolaan data toko oleh admin dan pembatasan CRUD akun khusus owner. Tes tersebut tidak menggantikan pengujian Auth, Storage HTTP, pengiriman email, CAPTCHA, dan Edge Functions pada proyek Supabase sungguhan. Pemeriksaan visual browser dan Lighthouse belum dapat dilakukan karena runtime browser lingkungan pengerjaan gagal memulai sandbox Windows. Target Lighthouse/Core Web Vitals belum diklaim tercapai.
 
 Lakukan QA visual 320, 375, 768, 1024, dan 1440 px, navigasi keyboard/Escape, reduced motion, kontras, serta seluruh alur dengan data toko sebelum peluncuran. Dialog memakai elemen native dengan fokus modal. Tidak ada analytics tracker pada versi ini.
 
@@ -167,5 +169,6 @@ Foto editorial lokal dipakai sebagai visual pengantar dan diberi label **bukan f
 Logo default dibuat sebagai wordmark antarmuka dan dapat diganti dengan logo toko asli. Tidak ada foto gadget yang dihasilkan AI. Font Manrope dimuat dari Google Fonts; fallback sans-serif tetap tersedia.
 
 Logo brand lokal memakai ikon [Simple Icons](https://simpleicons.org/) bila tersedia dan wordmark untuk merek yang tidak tersedia pada paket. Nama/merek tetap milik pemegangnya. Logo Visa/Mastercard berada di `public/payments`; QRIS, bank, e-wallet, dan Kredivo ditampilkan sebagai penanda metode pembayaran. Referensi model dan tautan produsen tersimpan di `src/data/device-catalog.json`.
-#   s e c o n d - g a d g e t  
+#   s e c o n d - g a d g e t 
+ 
  

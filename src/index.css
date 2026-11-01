@@ -47,3 +47,64 @@
   --color-success: #2c6a50;
   --color-danger: #b74b50;
 }
+
+.storefront.theme-dark {
+  --color-ink: #edf1f7;
+  --color-navy: #233a59;
+  --color-navy-hover: #304d72;
+  --color-muted: #a0a9b8;
+  --color-line: #303846;
+  --color-paper: #1b222d;
+  --color-success: #74c69d;
+  --color-danger: #ff9298;
+  color-scheme: dark;
+  color: var(--color-ink);
+  background-color: #111720;
+}
+.storefront.theme-dark header {
+  background-color: rgb(23 29 40 / 95%);
+}
+.storefront.theme-dark .bg-white {
+  background-color: #171d28;
+}
+.storefront.theme-dark .text-navy {
+  color: #a4c1f0;
+}
+.storefront.theme-dark .storefront-soft-panel {
+  background-color: #1b222d;
+}
+
+/* Admin navigation stays at the left edge; only the content scrolls horizontally. */
+.admin-menu-dialog:not([open]) {
+  display: none;
+}
+.admin-shell {
+  overflow-x: clip;
+}
+.admin-shell main {
+  overflow-wrap: anywhere;
+}
+.admin-shell table {
+  min-width: 580px;
+}
+.admin-shell input,
+.admin-shell select,
+.admin-shell textarea {
+  min-width: 0;
+}
+@media (max-width: 639px) {
+  .admin-shell dialog:not(.admin-menu-dialog) {
+    width: calc(100% - 1rem);
+    max-height: 94dvh;
+    border-radius: 12px;
+  }
+  .admin-shell dialog:not(.admin-menu-dialog) > div {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .admin-shell input:not([type='checkbox']),
+  .admin-shell textarea,
+  .admin-shell select {
+    font-size: 16px;
+  }
+}

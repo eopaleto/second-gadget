@@ -5,6 +5,7 @@ import { requireSupabase } from '../../lib/supabase'
 import { validatePhoto, validateSettings } from '../../lib/validation'
 import { catalogBrands } from '../../lib/catalog'
 import { imageUrl } from '../../lib/supabase'
+import ImagePreview from '../../components/ImagePreview'
 import { slugify } from '../../lib/utils'
 import type { Product } from '../../types'
 
@@ -119,11 +120,13 @@ export default function CrudPanel({
   rows,
   products,
   onSaved,
+  readOnly = false,
 }: {
   table: string
   rows: Row[]
   products: Product[]
   onSaved: (message: string) => void
+  readOnly?: boolean
 }) {
   const config = configs[table],
     [editing, setEditing] = useState<Row | null>(null),
@@ -145,7 +148,7 @@ export default function CrudPanel({
   }
   async function save(e: React.FormEvent) {
     e.preventDefault()
-    if (!editing) return
+    if (!editing || readOnly) return
     setBusy(true)
     setError('')
     const db = requireSupabase(),
@@ -221,10 +224,14 @@ export default function CrudPanel({
     <>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-2xl font-extrabold tracking-tight">{config.title}</h1>
-        <Button onClick={() => open(table === 'store_settings' ? rows[0] : undefined)}>
-          <Plus size={16} />
-          {table === 'store_settings' ? 'Ubah pengaturan' : `Tambah ${config.title.toLowerCase()}`}
-        </Button>
+        {!readOnly && (
+          <Button onClick={() => open(table === 'store_settings' ? rows[0] : undefined)}>
+            <Plus size={16} />
+            {table === 'store_settings'
+              ? 'Ubah pengaturan'
+              : `Tambah ${config.title.toLowerCase()}`}
+          </Button>
+        )}
       </div>
       {table !== 'store_settings' && (
         <>
@@ -261,10 +268,12 @@ export default function CrudPanel({
                         : 'Nonaktif'}
                 </p>
               </div>
-              <Button secondary onClick={() => open(row)} className="!px-3 !py-2 !text-xs">
-                <Pencil size={14} />
-                Ubah
-              </Button>
+              {!readOnly && (
+                <Button secondary onClick={() => open(row)} className="!px-3 !py-2 !text-xs">
+                  <Pencil size={14} />
+                  Ubah
+                </Button>
+              )}
             </div>
           ))}
         </div>
@@ -275,174 +284,171 @@ export default function CrudPanel({
           description="Tambahkan data asli untuk mulai mengelola konten ini."
         />
       )}
-      <Dialog
-        open={editing !== null}
-        onClose={() => {
-          if (!busy) setEditing(null)
-        }}
-        title={
-          editing?.id
-            ? `Ubah ${config.title.toLowerCase()}`
-            : `Tambah ${config.title.toLowerCase()}`
-        }
-        wide
-      >
-        <form onSubmit={save} className="space-y-5">
-          <fieldset disabled={busy} className="space-y-5">
-            {table === 'brands' && (
-              <Field label="Gunakan brand & logo bawaan (opsional)" htmlFor="preset-brand">
-                <select
-                  id="preset-brand"
-                  className={inputClass}
-                  defaultValue=""
-                  onChange={(e) => {
-                    const brand = catalogBrands.find((b) => b.slug === e.target.value)
-                    if (brand)
-                      setEditing({
-                        ...editing,
-                        name: brand.name,
-                        slug: brand.slug,
-                        logo_path: brand.logo_path,
-                      })
-                  }}
-                >
-                  <option value="">Brand manual / pilih dari referensi</option>
-                  {catalogBrands.map((b) => (
-                    <option value={b.slug} key={b.slug}>
-                      {b.name}
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            )}
-            {config.fields.map((f) => (
-              <Field key={f.key} label={f.label} htmlFor={`edit-${f.key}`}>
-                {f.type === 'checkbox' ? (
-                  <input
-                    id={`edit-${f.key}`}
-                    className="size-5 accent-navy"
-                    type="checkbox"
-                    checked={Boolean(editing?.[f.key])}
-                    onChange={(e) => setEditing({ ...editing, [f.key]: e.target.checked })}
-                  />
-                ) : f.type === 'image' ? (
-                  <>
-                    {Boolean(editing?.[f.key]) && (
-                      <img
-                        src={imageUrl(String(editing?.[f.key]))}
-                        alt={`Pratinjau ${f.label}`}
-                        className="mb-3 h-12 max-w-40 object-contain"
-                      />
-                    )}
-                    <FileDropzone
+      {!readOnly && (
+        <Dialog
+          open={editing !== null}
+          onClose={() => {
+            if (!busy) setEditing(null)
+          }}
+          title={
+            editing?.id
+              ? `Ubah ${config.title.toLowerCase()}`
+              : `Tambah ${config.title.toLowerCase()}`
+          }
+          wide
+        >
+          <form onSubmit={save} className="space-y-5">
+            <fieldset disabled={busy} className="space-y-5">
+              {table === 'brands' && (
+                <Field label="Gunakan brand & logo bawaan (opsional)" htmlFor="preset-brand">
+                  <select
+                    id="preset-brand"
+                    className={inputClass}
+                    defaultValue=""
+                    onChange={(e) => {
+                      const brand = catalogBrands.find((b) => b.slug === e.target.value)
+                      if (brand)
+                        setEditing({
+                          ...editing,
+                          name: brand.name,
+                          slug: brand.slug,
+                          logo_path: brand.logo_path,
+                        })
+                    }}
+                  >
+                    <option value="">Brand manual / pilih dari referensi</option>
+                    {catalogBrands.map((b) => (
+                      <option value={b.slug} key={b.slug}>
+                        {b.name}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+              )}
+              {config.fields.map((f) => (
+                <Field key={f.key} label={f.label} htmlFor={`edit-${f.key}`}>
+                  {f.type === 'checkbox' ? (
+                    <input
                       id={`edit-${f.key}`}
-                      files={files[f.key] ? [files[f.key]] : []}
-                      disabled={busy}
-                      hint="JPG, PNG, atau WebP · maks. 5 MB · satu file."
-                      onFiles={(selected) => {
-                        if (selected[0]) setFiles({ ...files, [f.key]: selected[0] })
-                      }}
+                      className="size-5 accent-navy"
+                      type="checkbox"
+                      checked={Boolean(editing?.[f.key])}
+                      onChange={(e) => setEditing({ ...editing, [f.key]: e.target.checked })}
                     />
-                    {Boolean(editing?.[f.key]) && (
-                      <button
-                        type="button"
-                        className="mt-2 min-h-10 text-xs text-danger underline"
-                        onClick={() => {
-                          setEditing({ ...editing, [f.key]: '' })
-                          setFiles((previous) => {
-                            const copy = { ...previous }
-                            delete copy[f.key]
-                            return copy
-                          })
+                  ) : f.type === 'image' ? (
+                    <>
+                      {(Boolean(editing?.[f.key]) || Boolean(files[f.key])) && (
+                        <div className="mb-4 max-w-xs">
+                          <ImagePreview
+                            src={editing?.[f.key] ? imageUrl(String(editing[f.key])) : undefined}
+                            file={files[f.key]}
+                            alt={f.label}
+                            disabled={busy}
+                            onRemove={() => {
+                              setEditing({ ...editing, [f.key]: '' })
+                              setFiles((previous) => {
+                                const copy = { ...previous }
+                                delete copy[f.key]
+                                return copy
+                              })
+                            }}
+                          />
+                        </div>
+                      )}
+                      <FileDropzone
+                        id={`edit-${f.key}`}
+                        files={files[f.key] ? [files[f.key]] : []}
+                        disabled={busy}
+                        hint="JPG, PNG, atau WebP · maks. 5 MB · satu file."
+                        onFiles={(selected) => {
+                          if (selected[0]) setFiles({ ...files, [f.key]: selected[0] })
                         }}
-                      >
-                        Hapus gambar dari konten ini
-                      </button>
-                    )}
-                  </>
-                ) : f.type === 'textarea' ? (
-                  <textarea
-                    id={`edit-${f.key}`}
-                    required={f.required}
-                    rows={4}
-                    maxLength={6000}
-                    className={inputClass}
-                    value={String(editing?.[f.key] || '')}
-                    onChange={(e) =>
-                      setEditing({
-                        ...editing,
-                        [f.key]: e.target.value,
-                        ...(f.key === 'name' && !editing?.id
-                          ? { slug: slugify(e.target.value) }
-                          : {}),
-                      })
-                    }
-                  />
-                ) : (
-                  <input
-                    id={`edit-${f.key}`}
-                    required={f.required}
-                    type={f.type || 'text'}
-                    className={inputClass}
-                    maxLength={500}
-                    value={String(editing?.[f.key] ?? '')}
-                    onChange={(e) =>
-                      setEditing({
-                        ...editing,
-                        [f.key]: e.target.value,
-                        ...(f.key === 'name' && !editing?.id
-                          ? { slug: slugify(e.target.value) }
-                          : {}),
-                      })
-                    }
-                  />
-                )}
-              </Field>
-            ))}
-            {table === 'promotions' && (
-              <fieldset className="space-y-2">
-                <legend className="mb-2 text-xs font-bold">Unit yang mengikuti promo</legend>
-                {products
-                  .filter((p) => p.status !== 'archived' && p.status !== 'draft')
-                  .map((p) => (
-                    <label key={p.id} className="flex min-h-10 items-center gap-3 text-xs">
-                      <input
-                        type="checkbox"
-                        className="size-4 accent-navy"
-                        checked={((editing?.product_ids as string[]) || []).includes(p.id)}
-                        onChange={(e) =>
-                          setEditing({
-                            ...editing,
-                            product_ids: e.target.checked
-                              ? [...((editing?.product_ids as string[]) || []), p.id]
-                              : ((editing?.product_ids as string[]) || []).filter(
-                                  (id) => id !== p.id,
-                                ),
-                          })
-                        }
                       />
-                      {p.name} · {p.sku}
-                    </label>
-                  ))}
-                <p className="text-xs leading-6 text-muted">
-                  Promo hanya tampil dalam periode aktif dan bila unit terkait masih tersedia.
-                </p>
-              </fieldset>
+                    </>
+                  ) : f.type === 'textarea' ? (
+                    <textarea
+                      id={`edit-${f.key}`}
+                      required={f.required}
+                      rows={4}
+                      maxLength={6000}
+                      className={inputClass}
+                      value={String(editing?.[f.key] || '')}
+                      onChange={(e) =>
+                        setEditing({
+                          ...editing,
+                          [f.key]: e.target.value,
+                          ...(f.key === 'name' && !editing?.id
+                            ? { slug: slugify(e.target.value) }
+                            : {}),
+                        })
+                      }
+                    />
+                  ) : (
+                    <input
+                      id={`edit-${f.key}`}
+                      required={f.required}
+                      type={f.type || 'text'}
+                      className={inputClass}
+                      maxLength={500}
+                      value={String(editing?.[f.key] ?? '')}
+                      onChange={(e) =>
+                        setEditing({
+                          ...editing,
+                          [f.key]: e.target.value,
+                          ...(f.key === 'name' && !editing?.id
+                            ? { slug: slugify(e.target.value) }
+                            : {}),
+                        })
+                      }
+                    />
+                  )}
+                </Field>
+              ))}
+              {table === 'promotions' && (
+                <fieldset className="space-y-2">
+                  <legend className="mb-2 text-xs font-bold">Unit yang mengikuti promo</legend>
+                  {products
+                    .filter((p) => p.status !== 'archived' && p.status !== 'draft')
+                    .map((p) => (
+                      <label key={p.id} className="flex min-h-10 items-center gap-3 text-xs">
+                        <input
+                          type="checkbox"
+                          className="size-4 accent-navy"
+                          checked={((editing?.product_ids as string[]) || []).includes(p.id)}
+                          onChange={(e) =>
+                            setEditing({
+                              ...editing,
+                              product_ids: e.target.checked
+                                ? [...((editing?.product_ids as string[]) || []), p.id]
+                                : ((editing?.product_ids as string[]) || []).filter(
+                                    (id) => id !== p.id,
+                                  ),
+                            })
+                          }
+                        />
+                        {p.name} · {p.sku}
+                      </label>
+                    ))}
+                  <p className="text-xs leading-6 text-muted">
+                    Promo hanya tampil dalam periode aktif dan bila unit terkait masih tersedia.
+                  </p>
+                </fieldset>
+              )}
+            </fieldset>
+            {error && (
+              <p role="alert" className="rounded-lg bg-danger/5 p-4 text-xs text-danger">
+                {error}
+              </p>
             )}
-          </fieldset>
-          {error && (
-            <p role="alert" className="rounded-lg bg-danger/5 p-4 text-xs text-danger">
-              {error}
-            </p>
-          )}
-          <div className="flex gap-3">
-            <Button disabled={busy}>{busy ? 'Menyimpan…' : 'Simpan'}</Button>
-            <Button type="button" secondary disabled={busy} onClick={() => setEditing(null)}>
-              Batal
-            </Button>
-          </div>
-        </form>
-      </Dialog>
+            <div className="flex gap-3">
+              <Button disabled={busy}>{busy ? 'Menyimpan…' : 'Simpan'}</Button>
+              <Button type="button" secondary disabled={busy} onClick={() => setEditing(null)}>
+                Batal
+              </Button>
+            </div>
+          </form>
+        </Dialog>
+      )}
     </>
   )
 }

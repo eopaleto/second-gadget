@@ -41,7 +41,7 @@ export function selectCollection(products: Product[], id: string) {
 export default function Collections({ products }: { products: Product[] }) {
   const cheapest = [...availableUnits(products)].sort((a, b) => a.price - b.price).slice(0, 4)
   return (
-    <div className="space-y-16 py-16 sm:space-y-20 sm:py-20">
+    <div className="space-y-8 pb-10 sm:space-y-10 sm:pb-12">
       {collectionDefinitions.map((c, i) => {
         const units = selectCollection(products, c.id)
         return (
@@ -160,7 +160,7 @@ export function StoreVisit({ settings }: { settings: StoreSettings }) {
           )}
         </div>
 
-        <div className="relative min-h-[320px] overflow-hidden border-t border-line bg-[#e8ebef] md:min-h-[420px] md:border-l md:border-t-0">
+        <div className="storefront-soft-panel relative min-h-[320px] overflow-hidden border-t border-line bg-[#e8ebef] md:min-h-[420px] md:border-l md:border-t-0">
           {embedUrl ? (
             <iframe
               title="Lokasi Second Device di Google Maps"

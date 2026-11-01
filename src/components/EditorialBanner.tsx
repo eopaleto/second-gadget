@@ -35,18 +35,6 @@ export default function EditorialBanner() {
       <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/80 to-transparent p-6 pt-16 text-white sm:p-8 sm:pt-16">
         <p className="text-[10px] uppercase tracking-[0.18em] text-white/60">A new chapter</p>
         <p className="mt-2 text-2xl font-semibold tracking-[-0.04em]">Masih banyak cerita.</p>
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <p className="text-[9px] text-white/60">Foto editorial · bukan foto unit stok</p>
-          <button
-            type="button"
-            onClick={() => setPaused(!paused)}
-            aria-label={paused ? 'Jalankan animasi banner' : 'Jeda animasi banner'}
-            aria-pressed={paused}
-            className="flex size-9 shrink-0 items-center justify-center rounded-full border border-white/25 bg-black/20 text-white transition hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-white motion-reduce:hidden"
-          >
-            {paused ? <Play size={14} /> : <Pause size={14} />}
-          </button>
-        </div>
       </div>
     </div>
   )

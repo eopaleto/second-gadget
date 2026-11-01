@@ -1,4 +1,6 @@
+import PromotionBanners from '../components/PromotionBanners'
 import BrandMarquee from '../components/BrandMarquee'
+import CustomerReviews from '../components/CustomerReviews'
 import EditorialBanner from '../components/EditorialBanner'
 import Collections, { StoreVisit } from './Collections'
 import { Link } from 'react-router-dom'
@@ -40,7 +42,7 @@ export default function Home() {
   return (
     <>
       <section className={`${container} pt-8 sm:pt-12 lg:pt-14`}>
-        <div className="grid min-w-0 overflow-hidden rounded-2xl bg-[#f1f2f3] lg:min-h-[520px] lg:grid-cols-[minmax(0,1.06fr)_minmax(0,1fr)]">
+        <div className="storefront-soft-panel grid min-w-0 overflow-hidden rounded-2xl bg-[#f1f2f3] lg:min-h-[520px] lg:grid-cols-[minmax(0,1.06fr)_minmax(0,1fr)]">
           <div className="relative flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-14 lg:px-12">
             <Eyebrow>Second device. A better choice.</Eyebrow>
             <h1 className="max-w-xl text-[42px] font-extrabold leading-[1.12] tracking-[-0.06em] sm:text-[54px] xl:text-[64px]">
@@ -57,25 +59,15 @@ export default function Home() {
                 Lihat semua gadget
                 <ArrowUpRight size={17} />
               </Link>
-              {wa ? (
-                <a
-                  href={wa}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${secondaryClass} !border-transparent !bg-transparent !px-2`}
-                >
-                  <FaWhatsapp size={18} />
-                  Tanya dulu
-                </a>
-              ) : (
-                <Link
-                  to="/trade-in"
-                  className={`${secondaryClass} !border-transparent !bg-transparent !px-2`}
-                >
-                  Kenali trade in
-                  <ArrowRight size={17} />
-                </Link>
-              )}
+              <a
+                href={wa ?? undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${secondaryClass} !border-transparent !text-white !bg-[#1EBE5D] !px-4`}
+              >
+                <FaWhatsapp size={18} />
+                Tanya dulu
+              </a>
             </div>
             <div className="mt-10 flex items-center gap-2 text-[10px] font-semibold tracking-wide text-muted">
               <span className="size-1.5 rounded-full bg-navy" />
@@ -111,7 +103,7 @@ export default function Home() {
         </div>
       </section>
       <BrandMarquee brands={data?.brands || []} />
-      <Reveal className={`${container} py-16 sm:py-20`}>
+      <Reveal className={`${container} py-10 sm:py-12`}>
         <SectionTitle
           eyebrow="Temukan yang cocok"
           title="Baru masuk."
@@ -162,6 +154,7 @@ export default function Home() {
           </div>
         )}
       </Reveal>
+      {!isPending && !isError && <PromotionBanners promotions={promos} />}
       {!isPending && !isError && <Collections products={data?.products || []} />}
       <Reveal className={container}>
         <div className="grid overflow-hidden rounded-2xl bg-navy text-white md:grid-cols-[1.3fr_1fr]">
@@ -184,18 +177,15 @@ export default function Home() {
               <ArrowUpRight size={18} />
             </Link>
           </div>
-          <div className="relative min-h-[250px] overflow-hidden">
+          <div className="relative aspect-[5/4] overflow-hidden bg-navy md:aspect-auto md:min-h-[360px]">
             <img
-              src="/images/trade-in-editorial.webp"
-              alt="Foto editorial dua iPhone berdampingan"
-              width="900"
-              height="1000"
+              src="/images/trade-in-editorial-v3.webp"
+              alt="Dua perangkat graphite dan silver di atas podium navy untuk trade in"
+              width="1402"
+              height="1122"
               loading="lazy"
-              className="absolute size-full object-cover"
+              className="absolute size-full object-contain"
             />
-            <p className="absolute bottom-4 right-4 rounded bg-black/60 px-2 py-1 text-[9px] text-white/80">
-              Foto editorial
-            </p>
           </div>
         </div>
       </Reveal>
@@ -275,25 +265,12 @@ export default function Home() {
         </div>
       </Reveal>
       <Reveal className={`${container}`}>
-        <SectionTitle title="Kata pelanggan." eyebrow="Cerita setelah memilih" to="/ulasan" />
-        {data?.reviews.length ? (
-          <div className="grid gap-5 md:grid-cols-3">
-            {data.reviews.slice(0, 3).map((r) => (
-              <blockquote key={r.id} className="rounded-xl border border-line p-7">
-                <p className="text-sm leading-7">“{r.body}”</p>
-                <footer className="mt-5 text-xs font-bold">{r.display_name}</footer>
-              </blockquote>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-wrap items-center justify-between gap-5 border-y border-line py-7">
-            <p className="text-sm text-muted">Belum ada ulasan yang dipublikasikan.</p>
-            <Link to="/ulasan" className="inline-flex items-center gap-2 text-xs font-bold">
-              Tentang ulasan kami
-              <ArrowUpRight size={15} />
-            </Link>
-          </div>
-        )}
+        <CustomerReviews
+          reviews={data?.reviews || []}
+          loading={isPending}
+          error={isError}
+          onRetry={() => void refetch()}
+        />
       </Reveal>
       <StoreVisit settings={settings} />
     </>

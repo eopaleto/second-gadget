@@ -71,7 +71,12 @@ beforeAll(async () => {
   )
   await db.exec(migration)
   await db.exec(migration) // the same SQL remains safe to apply twice
-  for (const name of ['202610290002_catalog_reviews.sql', '202610290003_reference_catalog.sql']) {
+  for (const name of [
+    '202610290002_catalog_reviews.sql',
+    '202610290003_reference_catalog.sql',
+    '202610310001_owner_monitoring.sql',
+    '202611010001_admin_store_access.sql',
+  ]) {
     const sql = await readFile(
       new URL(`../../supabase/migrations/${name}`, import.meta.url),
       'utf8',
@@ -88,7 +93,7 @@ beforeAll(async () => {
   await db.query("insert into public.categories(id,name,slug) values($1,'Category','category')", [
     category,
   ])
-  await as('authenticated', admin, () =>
+  await as('authenticated', owner, () =>
     db.query('select public.save_product($1::jsonb,$2::jsonb)', [
       JSON.stringify(record),
       JSON.stringify(images),
@@ -125,7 +130,7 @@ describe('database migration, role policies, atomic writes and private uploads',
         has_warranty: true,
         warranty_notes: 'Garansi toko 7 hari',
       }
-    await as('authenticated', admin, () =>
+    await as('authenticated', owner, () =>
       db.query('select public.save_product_v2($1::jsonb,$2::jsonb)', [JSON.stringify(copy), '[]']),
     )
     const result = await db.query<{
@@ -135,7 +140,7 @@ describe('database migration, role policies, atomic writes and private uploads',
     }>('select model_id,has_warranty,condition_label from public.products where id=$1', [id])
     expect(result.rows[0].has_warranty).toBe(true)
     expect(result.rows[0].condition_label).toBe('Like New')
-    await as('authenticated', admin, () =>
+    await as('authenticated', owner, () =>
       db.query('select public.save_product_v2($1::jsonb,$2::jsonb)', [
         JSON.stringify({
           ...copy,
@@ -155,7 +160,7 @@ describe('database migration, role policies, atomic writes and private uploads',
       "select id from public.brands where slug='apple'",
     )
     await expect(
-      as('authenticated', admin, () =>
+      as('authenticated', owner, () =>
         db.query('select public.save_product_v2($1::jsonb,$2::jsonb)', [
           JSON.stringify({
             ...copy,
@@ -167,7 +172,7 @@ describe('database migration, role policies, atomic writes and private uploads',
       ),
     ).rejects.toThrow(/model_brand_category_mismatch/)
   })
-  it('admins can moderate user reviews but cannot create or rewrite their content', async () => {
+  it('owner can moderate reviews while review content remains immutable', async () => {
     const added = await as('service_role', null, () =>
       db.query<{ id: string }>(
         "insert into public.reviews(display_name,body,rating,permission_to_publish) values('Customer','Original customer experience',5,true) returning id",
@@ -192,7 +197,7 @@ describe('database migration, role policies, atomic writes and private uploads',
       [id],
     )
     expect(result.rows[0].is_approved).toBe(false)
-    await as('authenticated', admin, () =>
+    await as('authenticated', owner, () =>
       db.query('update public.reviews set is_approved=true where id=$1', [id]),
     )
     result = await db.query('select is_approved from public.reviews where id=$1', [id])
@@ -200,7 +205,7 @@ describe('database migration, role policies, atomic writes and private uploads',
     await db.query('delete from public.reviews where id=$1', [id])
   })
   it('publishes available units while draft and archived units are inaccessible to anon', async () => {
-    await as('authenticated', admin, async () => {
+    await as('authenticated', owner, async () => {
       for (const status of ['draft', 'archived']) {
         const id = crypto.randomUUID()
         await db.query('select public.save_product($1::jsonb,$2::jsonb)', [
@@ -252,7 +257,7 @@ describe('database migration, role policies, atomic writes and private uploads',
       ),
     ).rejects.toThrow(/row-level security/)
   })
-  it('admin cannot escalate own role or delete submissions, but can read them', async () => {
+  it('admin can read submissions but cannot escalate its role or edit account credentials', async () => {
     await as('authenticated', admin, () =>
       db.query("update public.admin_profiles set role='owner' where user_id=$1", [admin]),
     )
@@ -265,8 +270,15 @@ describe('database migration, role policies, atomic writes and private uploads',
       db.query('select id from public.trade_in_requests'),
     )
     expect(submissions.rows.length).toBeGreaterThan(0)
+    const edited = await as('authenticated', admin, () =>
+      db.query(
+        "update public.admin_profiles set display_name='Tampered' where user_id=$1 returning user_id",
+        [owner],
+      ),
+    )
+    expect(edited.rows).toHaveLength(0)
     const deleted = await as('authenticated', admin, () =>
-      db.query('delete from public.trade_in_requests returning id'),
+      db.query('delete from public.admin_profiles where user_id=$1 returning user_id', [owner]),
     )
     expect(deleted.rows).toHaveLength(0)
   })
@@ -295,7 +307,7 @@ describe('database migration, role policies, atomic writes and private uploads',
   })
   it('an invalid image rolls back product changes and preserves its previous photos', async () => {
     await expect(
-      as('authenticated', admin, () =>
+      as('authenticated', owner, () =>
         db.query('select public.save_product($1::jsonb,$2::jsonb)', [
           JSON.stringify({ ...record, price: 999 }),
           JSON.stringify([{ ...images[0], storage_path: 'another-unit/private.webp' }]),
@@ -344,7 +356,7 @@ describe('database migration, role policies, atomic writes and private uploads',
   })
   it('a promo disappears automatically when the associated unit is sold', async () => {
     const id = crypto.randomUUID()
-    await as('authenticated', admin, () =>
+    await as('authenticated', owner, () =>
       db.query('select public.save_promotion($1::jsonb,$2::uuid[])', [
         JSON.stringify({
           id,
@@ -362,7 +374,7 @@ describe('database migration, role policies, atomic writes and private uploads',
     )
     const visible = await as('anon', null, () => db.query('select * from public.promotions'))
     expect(visible.rows).toHaveLength(1)
-    await as('authenticated', admin, () =>
+    await as('authenticated', owner, () =>
       db.query("update public.products set status='sold' where id=$1", [product]),
     )
     const hidden = await as('anon', null, () => db.query('select * from public.promotions'))
@@ -392,7 +404,7 @@ describe('database migration, role policies, atomic writes and private uploads',
     }
     expect(outcomes).toEqual([true, true, true, true, true, false])
   })
-  it('sensitive actions write an audit trail visible only to owner', async () => {
+  it('store managers can read the audit trail but cannot erase it', async () => {
     const ownerLogs = await as('authenticated', owner, () =>
       db.query('select * from public.admin_audit_logs'),
     )
@@ -400,9 +412,119 @@ describe('database migration, role policies, atomic writes and private uploads',
     const adminLogs = await as('authenticated', admin, () =>
       db.query('select * from public.admin_audit_logs'),
     )
-    expect(adminLogs.rows).toHaveLength(0)
+    expect(adminLogs.rows.length).toBeGreaterThan(0)
     await expect(
       as('authenticated', owner, () => db.exec('delete from public.admin_audit_logs')),
     ).rejects.toThrow(/permission denied/)
+  })
+  it('admin can create, update and delete products and manage store content and media', async () => {
+    const id = crypto.randomUUID()
+    const copy = {
+      ...record,
+      id,
+      sku: 'ADMIN-WRITE',
+      slug: 'admin-write',
+      status: 'draft',
+      condition_label: 'Baik',
+    }
+    const photo = [{ ...images[0], storage_path: `products/${id}/admin.webp` }]
+    await as('authenticated', admin, () =>
+      db.query('select public.save_product_v2($1::jsonb,$2::jsonb)', [
+        JSON.stringify(copy),
+        JSON.stringify(photo),
+      ]),
+    )
+    const changed = await as('authenticated', admin, () =>
+      db.query<{ price: number }>('update public.products set price=250 where id=$1 returning price', [id]),
+    )
+    expect(Number(changed.rows[0].price)).toBe(250)
+    await as('authenticated', admin, () =>
+      db.query('select public.save_product($1::jsonb,$2::jsonb)', [
+        JSON.stringify({ ...copy, price: 300 }),
+        JSON.stringify(photo),
+      ]),
+    )
+    const promotion = {
+      id: crypto.randomUUID(),
+      title: 'Admin promo',
+      slug: 'admin-promo',
+      description: 'Promo',
+      terms: 'Syarat',
+      start_at: new Date().toISOString(),
+      end_at: new Date(Date.now() + 86400000).toISOString(),
+      is_active: false,
+    }
+    await as('authenticated', admin, () =>
+      db.query('select public.save_promotion($1::jsonb,$2::uuid[])', [
+        JSON.stringify(promotion),
+        [id],
+      ]),
+    )
+    const review = await db.query<{ id: string }>(
+      "insert into public.reviews(display_name,body,rating,permission_to_publish) values('Admin moderation','Genuine customer review',5,true) returning id",
+    )
+    const moderated = await as('authenticated', admin, () =>
+      db.query('update public.reviews set is_approved=true where id=$1 returning id', [
+        review.rows[0].id,
+      ]),
+    )
+    expect(moderated.rows).toHaveLength(1)
+    const trade = await db.query<{ id: string }>(
+      "insert into public.trade_in_requests(reference_code,name,phone,brand,model,condition_notes,consent_at) values('ADMIN-DELETE','Customer','6281234567890','Brand','Model','Notes',now()) returning id",
+    )
+    const updatedTrade = await as('authenticated', admin, () =>
+      db.query("update public.trade_in_requests set status='completed' where id=$1 returning id", [
+        trade.rows[0].id,
+      ]),
+    )
+    expect(updatedTrade.rows).toHaveLength(1)
+    const deletedTrade = await as('authenticated', admin, () =>
+      db.query('delete from public.trade_in_requests where id=$1 returning id', [trade.rows[0].id]),
+    )
+    expect(deletedTrade.rows).toHaveLength(1)
+    await as('authenticated', admin, () =>
+      db.exec(
+        "insert into storage.objects(bucket_id,name) values('product-images','admin-upload.webp')",
+      ),
+    )
+    const removedImage = await as('authenticated', admin, () =>
+      db.query(
+        "delete from storage.objects where bucket_id='product-images' and name='admin-upload.webp' returning id",
+      ),
+    )
+    expect(removedImage.rows).toHaveLength(1)
+    await db.exec(
+      "insert into storage.objects(bucket_id,name) values('trade-in-private','admin-delete.webp')",
+    )
+    const removedPrivate = await as('authenticated', admin, () =>
+      db.query(
+        "delete from storage.objects where bucket_id='trade-in-private' and name='admin-delete.webp' returning id",
+      ),
+    )
+    expect(removedPrivate.rows).toHaveLength(1)
+    const deleted = await as('authenticated', admin, () =>
+      db.query('delete from public.products where id=$1 returning id', [id]),
+    )
+    expect(deleted.rows).toHaveLength(1)
+    const deletedPhotos = await db.query(
+      'select id from public.product_images where product_id=$1',
+      [id],
+    )
+    expect(deletedPhotos.rows).toHaveLength(0)
+  })
+  it('owner can permanently delete a product and its photo metadata', async () => {
+    const id = crypto.randomUUID()
+    await as('authenticated', owner, () =>
+      db.query('select public.save_product($1::jsonb,$2::jsonb)', [
+        JSON.stringify({ ...record, id, sku: 'DELETE-TEST', slug: 'delete-test', status: 'draft' }),
+        JSON.stringify([{ ...images[0], storage_path: `products/${id}/delete.webp` }]),
+      ]),
+    )
+    const result = await as('authenticated', owner, () =>
+      db.query('delete from public.products where id=$1 returning id', [id]),
+    )
+    expect(result.rows).toHaveLength(1)
+    const photos = await db.query('select id from public.product_images where product_id=$1', [id])
+    expect(photos.rows).toHaveLength(0)
   })
 })

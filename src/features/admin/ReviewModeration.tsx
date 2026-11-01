@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { RatingStars } from '../../components/StarRating'
 import type { Review } from '../../types'
 import { requireSupabase } from '../../lib/supabase'
 import { dateLabel } from '../../lib/utils'
@@ -7,9 +8,11 @@ import { Button, EmptyState, inputClass } from '../../components/ui'
 export default function ReviewModeration({
   reviews,
   onSaved,
+  readOnly = false,
 }: {
   reviews: Review[]
   onSaved: (message: string) => void
+  readOnly?: boolean
 }) {
   const [filter, setFilter] = useState('pending'),
     [busy, setBusy] = useState(''),
@@ -18,6 +21,7 @@ export default function ReviewModeration({
     (r) => filter === 'all' || (filter === 'pending' ? !r.is_approved : r.is_approved),
   )
   async function moderate(review: Review) {
+    if (readOnly) return
     setBusy(review.id)
     setError('')
     try {
@@ -69,27 +73,29 @@ export default function ReviewModeration({
               <article key={r.id} className="rounded-xl border border-line bg-white p-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <h2 className="font-bold">{r.display_name}</h2>
-                  <span className="text-xs text-muted">
-                    {r.rating ? `${r.rating}/5 · ` : ''}
-                    {dateLabel(r.created_at)}
-                  </span>
+                  <div className="flex flex-wrap items-center gap-3">
+                    {r.rating ? <RatingStars value={r.rating} /> : null}
+                    <span className="text-xs text-muted">{dateLabel(r.created_at)}</span>
+                  </div>
                 </div>
                 <p className="my-5 whitespace-pre-line text-sm leading-7">{r.body}</p>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <span className="text-xs text-muted">
                     {r.is_approved ? 'Dipublikasikan' : 'Menunggu moderasi'}
                   </span>
-                  <Button
-                    disabled={Boolean(busy) || !r.permission_to_publish}
-                    secondary={r.is_approved}
-                    onClick={() => void moderate(r)}
-                  >
-                    {busy === r.id
-                      ? 'Menyimpan…'
-                      : r.is_approved
-                        ? 'Sembunyikan'
-                        : 'Setujui & tampilkan'}
-                  </Button>
+                  {!readOnly && (
+                    <Button
+                      disabled={Boolean(busy) || !r.permission_to_publish}
+                      secondary={r.is_approved}
+                      onClick={() => void moderate(r)}
+                    >
+                      {busy === r.id
+                        ? 'Menyimpan…'
+                        : r.is_approved
+                          ? 'Sembunyikan'
+                          : 'Setujui & tampilkan'}
+                    </Button>
+                  )}
                 </div>
                 {!r.permission_to_publish && (
                   <p className="mt-3 text-xs text-danger">Izin publikasi belum tersedia.</p>
