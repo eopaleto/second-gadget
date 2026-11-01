@@ -7,6 +7,7 @@ export function useSeo(
   useEffect(() => {
     document.title = `${title} — Second Device`
     const site = import.meta.env.VITE_SITE_URL
+    const socialImage = new URL(image || '/favicon.svg', site || window.location.origin).href
     if (site) {
       try {
         const canonicalUrl = new URL(window.location.pathname, site).href
@@ -32,7 +33,13 @@ export function useSeo(
       ['meta[name="description"]', 'name', 'description', description],
       ['meta[property="og:title"]', 'property', 'og:title', document.title],
       ['meta[property="og:description"]', 'property', 'og:description', description],
-      ['meta[property="og:image"]', 'property', 'og:image', image || ''],
+      ['meta[property="og:image"]', 'property', 'og:image', socialImage],
+      ['meta[property="og:image:alt"]', 'property', 'og:image:alt', 'Logo Second Device'],
+      ['meta[name="twitter:card"]', 'name', 'twitter:card', 'summary'],
+      ['meta[name="twitter:title"]', 'name', 'twitter:title', document.title],
+      ['meta[name="twitter:description"]', 'name', 'twitter:description', description],
+      ['meta[name="twitter:image"]', 'name', 'twitter:image', socialImage],
+      ['meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', 'Logo Second Device'],
     ]) {
       let element = document.querySelector(selector) as HTMLMetaElement | null
       if (!element) {
