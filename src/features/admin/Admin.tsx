@@ -102,8 +102,8 @@ function Login({ signedIn }: { signedIn: boolean }) {
     }
   }
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-paper px-5 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-line bg-white p-7 sm:p-10">
+    <main className="grid min-h-dvh place-items-center bg-paper px-5 py-12">
+      <div className="mx-auto w-full max-w-md rounded-2xl border border-line bg-white p-7 sm:p-10">
         <div className="justify-center text-center flex">
           <Logo />
         </div>

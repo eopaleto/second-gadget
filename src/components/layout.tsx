@@ -265,7 +265,7 @@ export default function PublicLayout() {
   }, [location.pathname])
   return (
     <div
-      className={`storefront min-h-dvh min-w-0 overflow-x-clip pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-0 ${darkMode ? 'theme-dark' : ''}`}
+      className={`storefront min-h-dvh min-w-0 overflow-x-clip pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 ${darkMode ? 'theme-dark' : ''}`}
     >
       <a
         href="#main-content"

@@ -95,7 +95,7 @@ export default function StoreFooter({
     { name: 'WhatsApp', url: wa || '', icon: FaWhatsapp },
   ].filter((s) => safeHttpUrl(s.url))
   return (
-    <footer className="mt-20 bg-[#111720] py-12 text-white sm:mt-24 sm:py-16">
+    <footer className="mt-20 bg-[#111720] pb-3 pt-12 text-white sm:mt-24 sm:pb-4 sm:pt-16">
       <div className={container}>
         <div className="grid gap-10 break-words sm:grid-cols-2 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.2fr)] [&>div]:min-w-0">
           <div>

@@ -7,7 +7,7 @@ export const container = 'mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-12'
 export const inputClass =
   'w-full min-h-11 rounded-lg border border-line bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-navy focus:ring-2 focus:ring-navy/15 disabled:bg-paper disabled:text-muted'
 export const buttonClass =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-navy px-5 py-3 text-sm font-bold text-white transition hover:bg-navy-hover focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none'
+  'button-primary inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-navy px-5 py-3 text-sm font-bold text-white transition hover:bg-navy-hover focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none'
 export const secondaryClass =
   'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-line bg-white px-5 py-3 text-sm font-bold text-ink transition hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-navy disabled:cursor-not-allowed disabled:opacity-50'
 export function Button(props: ButtonHTMLAttributes<HTMLButtonElement> & { secondary?: boolean }) {

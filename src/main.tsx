@@ -8,6 +8,7 @@ import { RealtimeSync } from './app/RealtimeSync'
 import PublicLayout from './components/layout'
 import { Loading } from './components/ui'
 import Home from './features/Home'
+import StoreFavicon from './components/StoreFavicon'
 import './index.css'
 
 const Catalog = lazy(() => import('./features/Catalog'))
@@ -44,6 +45,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ErrorBoundary>
       <QueryClientProvider client={client}>
+        <StoreFavicon />
         <AuthProvider>
           <RealtimeSync />
           <MotionConfig reducedMotion="user">

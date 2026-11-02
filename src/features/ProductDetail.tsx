@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, ArrowUpRight, MessageCircle, Smartphone, ZoomIn } from 'lucide-react'
+import { ArrowLeft, ArrowUpRight, MessageCircle } from 'lucide-react'
 import { useStore, defaults } from '../lib/data'
 import { conditionText } from '../lib/catalog'
 import { imageUrl } from '../lib/supabase'
@@ -17,18 +17,22 @@ import {
 } from '../components/ui'
 import { useSeo } from '../hooks/useSeo'
 import ProductCard from '../components/ProductCard'
+import ProductImageViewer from '../components/ProductImageViewer'
 
 export default function ProductDetail() {
   const { slug } = useParams(),
     { data, isPending, isError, refetch } = useStore()
-  const [selected, setSelected] = useState(0),
+  const [selection, setSelection] = useState({ slug, index: 0 }),
     [zoom, setZoom] = useState(false)
   const product = data?.products.find((p) => p.slug === slug),
     settings = data?.settings || defaults
   const pictures = [...(product?.product_images || [])].sort(
     (a, b) => Number(b.is_primary) - Number(a.is_primary) || a.sort_order - b.sort_order,
   )
-  const picture = pictures[selected] || pictures[0]
+  const selected =
+    selection.slug === slug && selection.index < pictures.length ? selection.index : 0
+  const setSelected = (index: number) => setSelection({ slug, index })
+  const picture = pictures[selected]
   useSeo(
     product?.name || 'Detail gadget',
     product ? `${product.name}. ${rupiah(product.price)}. ${product.condition_notes}` : undefined,
@@ -84,29 +88,13 @@ export default function ProductDetail() {
       </nav>
       <div className="grid gap-9 lg:grid-cols-2 lg:gap-14">
         <div>
-          <button
-            onClick={() => picture && setZoom(true)}
-            disabled={!picture}
-            aria-label="Perbesar foto unit"
-            className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl bg-paper"
-          >
-            {picture ? (
-              <img
-                src={imageUrl(picture.storage_path)}
-                alt={picture.alt_text || product.name}
-                width="700"
-                height="700"
-                className="size-full object-contain"
-              />
-            ) : (
-              <Smartphone size={80} strokeWidth={1} className="text-muted" />
-            )}
-            {picture && (
-              <span className="absolute bottom-4 right-4 rounded-full bg-white p-3">
-                <ZoomIn size={18} />
-              </span>
-            )}
-          </button>
+          <ProductImageViewer
+            pictures={pictures}
+            name={product.name}
+            selected={selected}
+            onSelect={setSelected}
+            onOpen={() => setZoom(true)}
+          />
           <div className="mt-4 flex gap-3 overflow-x-auto pb-2">
             {pictures.map((im, i) => (
               <button
@@ -219,13 +207,13 @@ export default function ProductDetail() {
         title={picture?.alt_text || product.name}
         wide
       >
-        {picture && (
-          <img
-            src={imageUrl(picture.storage_path)}
-            alt={picture.alt_text || product.name}
-            className="max-h-[70dvh] w-full object-contain"
-          />
-        )}
+        <ProductImageViewer
+          pictures={pictures}
+          name={product.name}
+          selected={selected}
+          onSelect={setSelected}
+          enlarged
+        />
       </Dialog>
     </section>
   )

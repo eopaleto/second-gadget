@@ -121,6 +121,9 @@ describe('admin navigation and store management', () => {
   }
   it('opens a left menu and closes it after selecting another page', () => {
     render(shell('owner'))
+    const activeLink = screen.getByRole('link', { name: 'Produk' })
+    expect(activeLink).toHaveAttribute('aria-current', 'page')
+    expect(activeLink).toHaveClass('bg-navy', 'text-white')
     fireEvent.click(screen.getByRole('button', { name: 'Buka menu admin' }))
     const menu = screen.getByRole('dialog', { name: 'Menu admin' })
     expect(menu).toHaveAttribute('open')
